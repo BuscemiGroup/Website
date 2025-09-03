@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kosten besparen met data — Insights | Buscemi Group</title>
+<meta name="description" content="Zo leg je verborgen kosten bloot en verhoog je marge met eenvoudige analyses."/>
+<meta name="theme-color" content="#0e4d38"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<meta property="og:image" content="/assets/og-image.png"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Buscemi Group"/></a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="../over.html">Over</a>
+      <div class="dropdown">
+        <a href="../diensten/index.html">Diensten ▾</a>
+        <div class="dropdown-content" role="menu">
+          <a href="../diensten/marketing.html">Marketing</a>
+          <a href="../diensten/consultancy.html">Consultancy</a>
+        </div>
+      </div>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="../contact.html">Plan kennismaking</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='block'?'':'block'">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="subpage-hero">
+    <h1>Kosten besparen met data</h1>
+    <p class="sub">Snel zicht op je kostenhefbomen met een eenvoudige scan.</p>
+  </section>
+  <article style="padding:32px 0;max-width:800px;margin:0 auto">
+    <p class="muted">Leestijd: 4 min • Categorie: Consultancy</p>
+    <h3>1) Categoriseer uitgaven</h3>
+    <p>Groepeer kosten (media, tools, logistiek) en identificeer de grootste posten.</p>
+    <h3>2) Quick wins eerst</h3>
+    <p>Onderhandel licenties, schrap onbenutte tools en optimaliseer media-waste.</p>
+    <h3>3) Dashboards</h3>
+    <p>Monitor maand-op-maand KPI’s (CAC, marge, voorraadrotatie) en maak eigenaarschap duidelijk.</p>
+    <h3>4) Test & learn</h3>
+    <p>Voer gecontroleerde experimenten uit en schaal alleen wat rendeert.</p>
+    <div class="cta" style="margin-top:36px">
+      <p><strong>Ook besparen met betere inzichten?</strong> We helpen je graag op weg.</p>
+      <a class="btn" href="../contact.html">Plan gesprek</a>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+    <div class="muted"><a href="../legal.html">Privacy</a> • <a href="../legal.html">Cookies</a> • <a href="../legal.html">Algemene voorwaarden</a></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="../cookie.js"></script>
+
+</body>
+</html>

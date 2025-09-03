@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact — Buscemi Group</title>
+<meta name="description" content="Neem contact op met Buscemi Group. We reageren meestal binnen één werkdag."/>
+<meta name="theme-color" content="#0e4d38"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<meta property="og:image" content="/assets/og-image.png"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Buscemi Group"/></a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="over.html">Over</a>
+      <div class="dropdown">
+        <a href="diensten/index.html">Diensten ▾</a>
+        <div class="dropdown-content" role="menu">
+          <a href="diensten/marketing.html">Marketing</a>
+          <a href="diensten/consultancy.html">Consultancy</a>
+        </div>
+      </div>
+      <a href="insights/index.html">Insights</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="contact.html">Plan kennismaking</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='block'?'':'block'">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="subpage-hero">
+    <h1>Contact</h1>
+    <p class="sub">We reageren meestal binnen één werkdag.</p>
+  </section>
+  <div class="content" style="padding:32px 0">
+    <p>Vul het formulier in of gebruik de onderstaande gegevens om ons te bereiken.</p>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" data-netlify="true" netlify-honeypot="bot-field" name="contact" style="margin-top:20px;max-width:560px">
+      <input type="hidden" name="form-name" value="contact"/>
+      <p style="display:none"><label>Laat dit veld leeg: <input name="bot-field"/></label></p>
+      <div class="row">
+        <label>Naam<br/><input required name="name" placeholder="Voor- en achternaam"/></label>
+        <label>Bedrijf<br/><input name="company" placeholder="Bedrijfsnaam"/></label>
+      </div>
+      <div class="row">
+        <label>E-mail<br/><input required name="email" type="email" placeholder="naam@bedrijf.be"/></label>
+        <label>Telefoon<br/><input name="phone" type="tel" placeholder="+32 ..."/></label>
+      </div>
+      <label>Onderwerp<br/><input name="subject" placeholder="Waarover wil je praten?"/></label>
+      <label>Bericht<br/><textarea required name="message" rows="5" placeholder="Vertel kort wat je zoekt of waar je tegenaan loopt."></textarea></label>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
+        <button class="btn" type="submit">Verstuur</button>
+        <a class="btn alt" href="mailto:info@buscemigroup.be">Mail rechtstreeks</a>
+      </div>
+    </form>
+    <h3 style="margin-top:40px">Gegevens</h3>
+    <ul class="muted">
+      <li><strong>E-mail:</strong> info@buscemigroup.be</li>
+      <li><strong>Telefoon:</strong> +32 4x xx xx xxx</li>
+      <li><strong>Adres:</strong> —</li>
+      <li><strong>Ondernemingsnr/BTW:</strong> —</li>
+    </ul>
+    <div class="cta" style="margin-top:36px;max-width:720px">
+      <p><strong>Klaar voor een verkennend gesprek?</strong> We bekijken meteen waar de snelste winst zit.</p>
+      <a class="btn" href="contact.html">Plan gesprek</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+    <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="cookie.js"></script>
+
+<div class="sticky-cta"><a class="btn" href="contact.html">Plan gesprek</a></div>
+</body>
+</html>

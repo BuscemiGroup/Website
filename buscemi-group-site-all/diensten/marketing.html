@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Marketing — Buscemi Group</title>
+<meta name="description" content="Socials, ads, branding & retail experience"/>
+<meta name="theme-color" content="#0e4d38"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<meta property="og:image" content="/assets/og-image.png"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Buscemi Group"/></a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="../over.html">Over</a>
+      <div class="dropdown">
+        <a href="../diensten/index.html">Diensten ▾</a>
+        <div class="dropdown-content" role="menu">
+          <a href="../diensten/marketing.html">Marketing</a>
+          <a href="../diensten/consultancy.html">Consultancy</a>
+        </div>
+      </div>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="../contact.html">Plan kennismaking</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='block'?'':'block'">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="subpage-hero">
+    <h1>Marketing</h1>
+    <p class="sub">Socials, ads, branding & retail experience — always on brand, always op resultaat.</p>
+  </section>
+  <div class="content" style="padding:32px 0">
+    <div class="grid-3">
+      <div class="card pad tile"><h3>Socials & Content</h3><p>Beheer en creatie voor TikTok, Instagram, Facebook en LinkedIn — inclusief korte video, beeld en copy.</p></div>
+      <div class="card pad tile"><h3>Ads & Performance</h3><p>Meta, Google (Search/Display/YouTube), retargeting en conversietracking. Heldere KPI’s en rapportering.</p></div>
+      <div class="card pad tile"><h3>Branding & Retail</h3><p>Merkfundamenten, huisstijl en touchpoints in showroom of winkel. Consistente merkbeleving.</p></div>
+    </div>
+    <h3 style="margin-top:40px">Onze aanpak</h3>
+    <div class="steps">
+      <div class="step"><strong>Audit</strong> — kanalen, creative en tracking. We bepalen quick wins.</div>
+      <div class="step"><strong>Plan</strong> — contentkalender, mediaplan en KPI’s.</div>
+      <div class="step"><strong>Run</strong> — creatie, publicatie en campagnesturing.</div>
+      <div class="step"><strong>Optimaliseer</strong> — A/B-tests, learnings en schaalbare formats.</div>
+    </div>
+    <h3 style="margin-top:32px">Wat je mag verwachten</h3>
+    <ul>
+      <li>Consistente merkuitstraling en tone of voice</li>
+      <li>Meetbare groei in bereik, engagement en conversies</li>
+      <li>Maandrapport met duidelijke inzichten en next steps</li>
+    </ul>
+    <div class="cta" style="margin-top:36px">
+      <p><strong>Wil je je marketing structureren en laten presteren?</strong></p>
+      <a class="btn" href="../contact.html">Plan een gesprek</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+    <div class="muted"><a href="../legal.html">Privacy</a> • <a href="../legal.html">Cookies</a> • <a href="../legal.html">Algemene voorwaarden</a></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="../cookie.js"></script>
+
+<div class="sticky-cta"><a class="btn" href="../contact.html">Plan gesprek</a></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Diensten — Buscemi Group</title>
+<meta name="description" content="Wat we aanbieden"/>
+<meta name="theme-color" content="#0e4d38"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<meta property="og:image" content="/assets/og-image.png"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Buscemi Group"/></a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="../over.html">Over</a>
+      <div class="dropdown">
+        <a href="../diensten/index.html">Diensten ▾</a>
+        <div class="dropdown-content" role="menu">
+          <a href="../diensten/marketing.html">Marketing</a>
+          <a href="../diensten/consultancy.html">Consultancy</a>
+        </div>
+      </div>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="../contact.html">Plan kennismaking</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='block'?'':'block'">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="subpage-hero">
+    <h1>Diensten</h1>
+    <p class="sub">Twee pijlers die je bedrijf vooruithelpen.</p>
+  </section>
+  <div class="content" style="padding:32px 0">
+    <div class="grid-2">
+      <div class="card pad tile">
+        <h3>Marketing</h3>
+        <p>Socials, advertenties, branding en retail experience. Merkconsistentie met focus op performance.</p>
+        <p style="margin-top:12px"><a class="gold" href="marketing.html">Meer over Marketing →</a></p>
+      </div>
+      <div class="card pad tile">
+        <h3>Consultancy</h3>
+        <p>Kostenoptimalisatie, strategie en efficiëntie. Concreet plan met heldere rapportering.</p>
+        <p style="margin-top:12px"><a class="gold" href="consultancy.html">Meer over Consultancy →</a></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+    <div class="muted"><a href="../legal.html">Privacy</a> • <a href="../legal.html">Cookies</a> • <a href="../legal.html">Algemene voorwaarden</a></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="../cookie.js"></script>
+
+<div class="sticky-cta"><a class="btn" href="../contact.html">Plan gesprek</a></div>
+</body>
+</html>

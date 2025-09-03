@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Juridisch — Buscemi Group</title>
+<meta name="description" content="Privacy, cookies en algemene voorwaarden."/>
+<meta name="theme-color" content="#0e4d38"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<meta property="og:image" content="/assets/og-image.png"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Buscemi Group"/></a>
+    <nav class="nav-links" aria-label="Hoofdnavigatie">
+      <a href="over.html">Over</a>
+      <div class="dropdown">
+        <a href="diensten/index.html">Diensten ▾</a>
+        <div class="dropdown-content" role="menu">
+          <a href="diensten/marketing.html">Marketing</a>
+          <a href="diensten/consultancy.html">Consultancy</a>
+        </div>
+      </div>
+      <a href="insights/index.html">Insights</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="contact.html">Plan kennismaking</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='block'?'':'block'">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="subpage-hero">
+    <h1>Juridisch</h1>
+    <p class="sub">Privacy, cookies en algemene voorwaarden</p>
+  </section>
+  <div class="content" style="padding:32px 0">
+    <h3>Privacyverklaring</h3>
+    <p>We behandelen je persoonsgegevens zorgvuldig en enkel voor het doel waarvoor je ze hebt verstrekt (bv. contactname, offerte, samenwerking). Je hebt steeds recht op inzage, verbetering en verwijdering.</p>
+    <h3>Cookies</h3>
+    <p>Onze site gebruikt enkel functionele en analytische cookies. Je kan je voorkeuren aanpassen via je browserinstellingen.</p>
+    <h3>Algemene voorwaarden</h3>
+    <p>We werken met duidelijke afspraken en transparante offertes. Specifieke voorwaarden worden bij aanvang van een project gedeeld.</p>
+    <p class="muted" style="margin-top:24px">Deze pagina bevat algemene informatie en vormt geen juridisch advies.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+    <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="cookie.js"></script>
+
+<div class="sticky-cta"><a class="btn" href="contact.html">Plan gesprek</a></div>
+</body>
+</html>
