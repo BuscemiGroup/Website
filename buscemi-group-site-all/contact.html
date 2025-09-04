@@ -45,11 +45,11 @@
     <h1>Contact</h1>
     <p class="sub">We reageren meestal binnen één werkdag.</p>
   </section>
-  <div class="content" style="padding:32px 0">
+    <div class="content">
     <p>Vul het formulier in of gebruik de onderstaande gegevens om ons te bereiken.</p>
-    <form method="POST" data-netlify="true" netlify-honeypot="bot-field" name="contact" style="margin-top:20px;max-width:560px">
+      <form class="mt-20 max-w-560" method="POST" data-netlify="true" netlify-honeypot="bot-field" name="contact">
       <input type="hidden" name="form-name" value="contact"/>
-      <p style="display:none"><label>Laat dit veld leeg: <input name="bot-field"/></label></p>
+        <p class="hidden"><label>Laat dit veld leeg: <input name="bot-field"/></label></p>
       <div class="row">
         <label>Naam<br/><input required name="name" placeholder="Voor- en achternaam"/></label>
         <label>Bedrijf<br/><input name="company" placeholder="Bedrijfsnaam"/></label>
@@ -60,19 +60,19 @@
       </div>
       <label>Onderwerp<br/><input name="subject" placeholder="Waarover wil je praten?"/></label>
       <label>Bericht<br/><textarea required name="message" rows="5" placeholder="Vertel kort wat je zoekt of waar je tegenaan loopt."></textarea></label>
-      <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
+        <div class="flex gap-12 items-center mt-8">
         <button class="btn" type="submit">Verstuur</button>
         <a class="btn alt" href="mailto:info@buscemigroup.be">Mail rechtstreeks</a>
       </div>
     </form>
-    <h3 style="margin-top:40px">Gegevens</h3>
+      <h3 class="mt-40">Gegevens</h3>
     <ul class="muted">
       <li><strong>E-mail:</strong> info@buscemigroup.be</li>
       <li><strong>Telefoon:</strong> +32 4x xx xx xxx</li>
       <li><strong>Adres:</strong> —</li>
       <li><strong>Ondernemingsnr/BTW:</strong> —</li>
     </ul>
-    <div class="cta" style="margin-top:36px;max-width:720px">
+      <div class="cta mt-36 max-w-720">
       <p><strong>Klaar voor een verkennend gesprek?</strong> We bekijken meteen waar de snelste winst zit.</p>
       <a class="btn" href="contact.html">Plan gesprek</a>
     </div>
@@ -80,10 +80,10 @@
 </main>
 
 <footer>
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-    <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
-    <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
-  </div>
+    <div class="container flex justify-between items-center gap-12 flex-wrap">
+      <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+      <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
+    </div>
 </footer>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="cookie.js"></script>
