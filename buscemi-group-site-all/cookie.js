@@ -12,11 +12,16 @@
         </div>\
         <div class="cookie-actions">\
           <button id="cookie-accept" class="btn">Akkoord</button>\
+          <button id="cookie-decline" class="btn alt">Weigeren</button>\
         </div>\
       </div>';
     document.body.appendChild(banner);
     document.getElementById('cookie-accept').addEventListener('click', function(){
       try{ localStorage.setItem(key, '1'); }catch(e){}
+      banner.remove();
+    });
+    document.getElementById('cookie-decline').addEventListener('click', function(){
+      try{ localStorage.setItem(key, '0'); }catch(e){}
       banner.remove();
     });
   }
