@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
+<!-- Nieuw: utilities.css voor nette layout-helpers en a11y -->
+<link rel="stylesheet" href="src/css/utilities.css"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <meta property="og:image" content="https://www.buscemigroup.be/assets/og-image.png"/>
 <meta property="og:title" content="Buscemi Group — KMO-expertise &amp; meetbare groei"/>
@@ -23,7 +25,8 @@
 <header>
   <div class="container nav">
     <a class="brand" href="index.html"><img src="assets/logo.png" alt="Buscemi Group"/></a>
-    <nav class="nav-links" aria-label="Hoofdnavigatie">
+    <!-- Nieuw: burger class heb je al; aria-expanded is ok -->
+    <nav id="primary-nav" class="nav-links" aria-label="Hoofdnavigatie">
       <a href="over.html">Over</a>
       <div class="dropdown">
         <a href="diensten/index.html">Diensten ▾</a>
@@ -119,7 +122,8 @@
 </footer>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="cookie.js"></script>
-<script src="nav.js"></script>
+<!-- Nieuw: gebruik de toegankelijke nav (let op het pad naar src/js) -->
+<script src="src/js/nav.js" defer></script>
 
 <div class="sticky-cta"><a class="btn" href="contact.html">Plan gesprek</a></div>
 </body>
