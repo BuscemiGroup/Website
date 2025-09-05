@@ -1,49 +1,44 @@
-# netlify.toml — security headers + caching
-
-# (Optioneel) als je een build stap hebt, pas 'publish' aan.
+# /netlify.toml
 [build]
   publish = "."
 
-# Algemene security headers
+# ---------- Redirects ----------
+[[redirects]]
+  from = "/diensten"
+  to = "/diensten/"
+  status = 301
+  force = true
+
+# ---------- Global security headers ----------
 [[headers]]
   for = "/*"
   [headers.values]
-  Strict-Transport-Security      = "max-age=63072000; includeSubDomains; preload"
-  Referrer-Policy               = "strict-origin-when-cross-origin"
-  X-Content-Type-Options        = "nosniff"
-  X-Frame-Options               = "DENY"
-  X-XSS-Protection              = "0"
-  Permissions-Policy            = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
-  Cross-Origin-Opener-Policy    = "same-origin"
-  Cross-Origin-Resource-Policy  = "same-origin"
-  X-DNS-Prefetch-Control        = "off"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+    # Minimalistische CSP – pas domeinen aan indien je extra scripts/fonts laadt
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' plausible.io; connect-src 'self' plausible.io; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
-# Strikte CSP — werkt met jouw huidige setup (geen externe scripts)
-# Als je later externe bronnen toevoegt (fonts/analytics), moeten die hier worden toegestaan.
-[[headers]]
-  for = "/*"
-  [headers.values]
-  Content-Security-Policy = """
-    default-src 'self';
-    base-uri 'self';
-    script-src 'self';
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: blob:;
-    font-src 'self';
-    connect-src 'self';
-    form-action 'self' https://*.netlify.app https://*.netlify.com;
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
-  """
-
-# Lange cache voor statische assets (pas het pad aan als jij /assets of /static gebruikt)
+# ---------- Long-cache voor static assets ----------
 [[headers]]
   for = "/assets/*"
   [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=31536000, immutable"
 
-# Service worker zelf nooit keihard cachen
 [[headers]]
-  for = "/sw.js"
+  for = "/css/*"
   [headers.values]
-  Cache-Control = "no-cache"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ---------- Kort-cache voor HTML ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Netlify matched hier ook HTML; overschrijft de asset-routes niet
+    Cache-Control = "public, max-age=300, must-revalidate"
