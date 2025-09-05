@@ -1,0 +1,12 @@
+{
+  "name": "Buscemi Group",
+  "short_name": "BuscemiGroup",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d1425",
+  "icons": [
+    { "src": "assets/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/logo-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
