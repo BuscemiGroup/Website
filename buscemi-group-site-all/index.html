@@ -1,136 +1,197 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl-BE">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Buscemi Group — KMO-expertise & meetbare groei</title>
-<meta name="description" content="Marketing & consultancy voor KMO's met meetbaar resultaat."/>
-<meta name="theme-color" content="#0e4d38"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="style.css"/>
-<!-- Nieuw: utilities.css voor nette layout-helpers en a11y -->
-<l<link rel="stylesheet" href="../utilities.css"/>
-<link rel="icon" type="image/png" href="assets/favicon.png"/>
-<meta property="og:image" content="https://www.buscemigroup.be/assets/og-image.png"/>
-<meta property="og:title" content="Buscemi Group — KMO-expertise &amp; meetbare groei"/>
-<meta property="og:description" content="Marketing &amp; consultancy voor KMO's met meetbaar resultaat."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://www.buscemigroup.be/"/>
-      <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Buscemi Group — KMO-expertise &amp; meetbare groei"/>
-    <meta name="twitter:description" content="Marketing &amp; consultancy voor KMO's met meetbaar resultaat."/>
-    <meta name="twitter:image" content="https://www.buscemigroup.be/assets/og-image.png"/>
-   
-  <link rel="canonical" href="https://www.buscemigroup.be/"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Marketing & Consultancy voor ambitieuze KMO’s | Buscemi Group</title>
+  <meta name="description" content="Wij helpen KMO’s groeien met heldere strategie, efficiënte uitvoering en meetbare KPI’s – marketing & consultancy onder één dak." />
+  <link rel="canonical" href="https://www.buscemigroup.be/" />
+  <meta name="theme-color" content="#0d1425" />
+
+  <!-- Fonts (overweeg later self-hosting voor performance) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/utilities.css" />
+
+  <!-- Icons & PWA basics (zorg dat deze files bestaan) -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.buscemigroup.be/" />
+  <meta property="og:site_name" content="Buscemi Group" />
+  <meta property="og:title" content="Marketing & Consultancy voor ambitieuze KMO’s" />
+  <meta property="og:description" content="KMO‑expertise • Meetbare groei. Strategie, creatie en performantie met heldere KPI’s." />
+  <meta property="og:image" content="https://www.buscemigroup.be/assets/og-image.png" />
+  <meta property="og:locale" content="nl_BE" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Marketing & Consultancy voor ambitieuze KMO’s" />
+  <meta name="twitter:description" content="KMO‑expertise • Meetbare groei." />
+  <meta name="twitter:image" content="https://www.buscemigroup.be/assets/og-image.png" />
+
+  <!-- Structured Data: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Buscemi Group",
+    "url": "https://www.buscemigroup.be/",
+    "logo": "https://www.buscemigroup.be/assets/logo.png",
+    "email": "info@buscemigroup.be",
+    "telephone": "+32 4X XX XX XXX"
+  }
+  </script>
+
+  <!-- Structured Data: FAQ (past bij ‘Waarom Buscemi Group?’) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Wat doen jullie?","acceptedAnswer":{"@type":"Answer","text":"Strategisch advies en marketing onder één dak, met focus op KPI’s en rendement."}},
+      {"@type":"Question","name":"Hoe meten jullie succes?","acceptedAnswer":{"@type":"Answer","text":"Via vooraf gedefinieerde KPI’s met maandelijkse rapportering en concrete next steps."}}
+    ]
+  }
+  </script>
+
+  <!-- Analytics (privacy-vriendelijk) -->
+  <script defer data-domain="buscemigroup.be" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+  <a class="visually-hidden skip-link" href="#main-content">Ga naar hoofdinhoud</a>
 
-    <a href="#top" class="visually-hidden skip-link">Ga naar inhoud</a>
-  <header>
-  <div class="container nav">
-    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Buscemi Group"/></a>
-    <!-- Nieuw: burger class heb je al; aria-expanded is ok -->
-    <nav id="primary-nav" class="nav-links" aria-label="Hoofdnavigatie">
-      <a href="over.html">Over</a>
-      <div class="dropdown">
-        <a href="diensten/index.html">Diensten ▾</a>
-        <div class="dropdown-content" role="menu">
-          <a href="diensten/marketing.html">Marketing</a>
-          <a href="diensten/consultancy.html">Consultancy</a>
-        </div>
-      </div>
-      <a href="insights/index.html">Insights</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <a class="btn" href="contact.html">Plan kennismaking</a>
-    <button class="burger" aria-label="Menu" aria-expanded="false">☰</button>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/">
+        <!-- TODO: vervang width/height door de echte afmetingen van je logo -->
+        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
+      </a>
 
-<main id="top">
-  <section class="hero">
-    <div class="container grid-2">
+      <button class="burger" data-menu-button aria-label="Hoofdmenu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+
+      <nav id="primary-nav" class="nav-links" aria-label="Hoofdnavigatie" data-nav hidden>
+        <ul class="menu">
+          <li><a href="/over.html">Over</a></li>
+          <li>
+            <details class="dropdown">
+              <summary>Diensten</summary>
+              <ul class="submenu" role="menu">
+                <li role="none"><a role="menuitem" href="/diensten/marketing.html">Marketing</a></li>
+                <li role="none"><a role="menuitem" href="/diensten/consultancy.html">Consultancy</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="/insights/index.html">Insights</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="container grid-2">
         <div>
-          <p class="kicker">KMO expertise • Meetbare groei</p>
+          <p class="kicker">KMO‑expertise • Meetbare groei</p>
           <h1>Marketing & Consultancy voor <span class="accent">ambitieuze KMO’s</span></h1>
-          <p>Wij helpen KMO’s groeien met heldere strategie en efficiënte uitvoering. We combineren praktijkervaring in KMO-management met marketingexpertise — ondersteund door data en AI waar het waarde toevoegt.</p>
+          <p>Wij helpen KMO’s groeien met heldere strategie en efficiënte uitvoering. We combineren praktijkervaring in KMO‑management met marketingexpertise — ondersteund door data en AI waar het waarde toevoegt.</p>
           <div class="flex gap-12 flex-wrap">
-            <a class="btn" href="contact.html">Vrijblijvend gesprek</a>
-            <a class="btn alt" href="diensten/index.html">Onze diensten</a>
+            <a class="btn" href="/contact.html">Plan kennismaking</a>
+            <a class="btn alt" href="/diensten/index.html">Onze diensten</a>
           </div>
+
           <div class="kpi">
             <div class="card"><div class="val">Strategie & uitvoering</div><div class="label">Onder één dak</div></div>
             <div class="card"><div class="val">Meetbare groei</div><div class="label">Heldere KPI’s</div></div>
-            <div class="card"><div class="val">KMO-expertise</div><div class="label">Praktisch & haalbaar</div></div>
+            <div class="card"><div class="val">KMO‑expertise</div><div class="label">Praktisch & haalbaar</div></div>
           </div>
         </div>
+
         <div class="card pad" aria-label="USP">
           <h2 class="mt-0">Waarom Buscemi Group?</h2>
-        <p class="muted">Geen dure vrijblijvende adviezen, wel een partner die <span class="gold">meedenkt én meedoet</span>. Met AI-ondersteuning versnellen we analyses, contentproductie en optimalisaties — efficiënt en kwaliteitsvol.</p>
-        <ul class="muted">
-          <li>Strategie, creatie en performantie</li>
-          <li>Heldere rapportering en concrete next steps</li>
-          <li>Focus op rendement en operationele efficiëntie</li>
-        </ul>
+          <p class="muted">Geen dure vrijblijvende adviezen, wel een partner die <span class="gold">meedenkt én meedoet</span>. Met AI‑ondersteuning versnellen we analyses, contentproductie en optimalisaties — efficiënt en kwaliteitsvol.</p>
+          <ul class="muted">
+            <li>Strategie, creatie en performantie</li>
+            <li>Heldere rapportering en concrete next steps</li>
+            <li>Focus op rendement en operationele efficiëntie</li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
     <section class="container mt-10">
-    <h2 class="center">Wat we doen</h2>
-    <p class="sub center">Strategisch advies en marketing die meetbaar resultaat opleveren.</p>
+      <h2 class="center">Wat we doen</h2>
+      <p class="sub center">Strategisch advies en marketing die meetbaar resultaat opleveren.</p>
       <div class="grid-2 mt-24">
-      <div class="card pad tile">
-        <h3>Marketing</h3>
-        <p>Van social media tot advertenties: we bouwen een consistente merkbeleving en campagnes die presteren.</p>
-          <p class="mt-12"><a class="gold" href="diensten/marketing.html">Lees meer →</a></p>
+        <article class="card pad tile">
+          <h3>Marketing</h3>
+          <p>Van social media tot advertenties: we bouwen een consistente merkbeleving en campagnes die presteren.</p>
+          <p class="mt-12"><a class="gold" href="/diensten/marketing.html">Lees meer →</a></p>
+        </article>
+        <article class="card pad tile">
+          <h3>Consultancy</h3>
+          <p>Kostenoptimalisatie, strategie en efficiëntie — we vertalen inzichten naar een concreet groeiplan.</p>
+          <p class="mt-12"><a class="gold" href="/diensten/consultancy.html">Lees meer →</a></p>
+        </article>
       </div>
-      <div class="card pad tile">
-        <h3>Consultancy</h3>
-        <p>Kostenoptimalisatie, strategie en efficiëntie — we vertalen inzichten naar een concreet groeiplan.</p>
-          <p class="mt-12"><a class="gold" href="diensten/consultancy.html">Lees meer →</a></p>
-      </div>
-    </div>
-  </section>
+    </section>
 
     <section class="container mt-20">
-    <h2 class="center">Onze aanpak</h2>
+      <h2 class="center">Onze aanpak</h2>
       <div class="grid-3 mt-24">
-      <div class="card pad tile"><h3>1. Analyse</h3><p>Quickscan van cijfers, kanalen en processen. We bepalen duidelijke doelstellingen.</p></div>
-      <div class="card pad tile"><h3>2. Plan</h3><p>Roadmap met prioriteiten, KPI’s en budget. Snel waarde leveren staat centraal.</p></div>
-      <div class="card pad tile"><h3>3. Uitvoering</h3><p>Implementatie, testing en continue optimalisatie. Heldere rapportering.</p></div>
-    </div>
-  </section>
+        <div class="card pad tile"><h3>1. Analyse</h3><p>Quickscan van cijfers, kanalen en processen. We bepalen duidelijke doelstellingen.</p></div>
+        <div class="card pad tile"><h3>2. Plan</h3><p>Roadmap met prioriteiten, KPI’s en budget. Snel waarde leveren staat centraal.</p></div>
+        <div class="card pad tile"><h3>3. Uitvoering</h3><p>Implementatie, testing en continue optimalisatie. Heldere rapportering.</p></div>
+      </div>
+    </section>
 
     <section class="container mt-10">
-    <h2 class="center">Wat klanten zeggen</h2>
-      <div class="card pad max-w-760 mx-auto my-24 text-center">
-      <p><em>“Buscemi Group bracht structuur en focus. Binnen drie maanden zagen we duidelijke groei in leads én marge.”</em></p>
-      <p class="muted">— Naam, CEO van Bedrijf X</p>
-    </div>
-  </section>
+      <h2 class="center">Wat klanten zeggen</h2>
+      <figure class="card pad max-w-760 mx-auto my-24 text-center">
+        <blockquote>
+          <p><em>“Buscemi Group bracht structuur en focus. Binnen drie maanden zagen we duidelijke groei in leads én marge.”</em></p>
+        </blockquote>
+        <figcaption class="muted">— Naam, CEO van Bedrijf X</figcaption>
+      </figure>
+    </section>
 
     <section class="container my-60 mx-auto">
-    <div class="cta">
-      <p><strong>Klaar om je bedrijf te laten groeien?</strong> Plan een kort kennismakingsgesprek.</p>
-      <a class="btn" href="contact.html">Plan gesprek</a>
-    </div>
-  </section>
-</main>
+      <div class="cta">
+        <p><strong>Klaar om je bedrijf te laten groeien?</strong> Plan een kort kennismakingsgesprek.</p>
+        <a class="btn" href="/contact.html">Plan kennismaking</a>
+      </div>
+    </section>
+  </main>
 
-<footer>
+  <footer class="site-footer">
     <div class="container flex justify-between items-center gap-12 flex-wrap">
       <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
-      <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
+      <div class="muted">
+        <a href="/legal.html">Privacy</a> • <a href="/legal.html">Cookies</a> • <a href="/legal.html">Algemene voorwaarden</a>
+      </div>
+      <!-- TODO: voeg KBO/BTW en (indien van toepassing) adres toe in de footer -->
     </div>
-</footer>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-<script src="cookie.js"></script>
-<!-- Nieuw: gebruik de toegankelijke nav (let op het pad naar src/js) -->
-<script src="src/js/nav.js" defer></script>
+  </footer>
 
-<div class="sticky-cta"><a class="btn" href="contact.html">Plan gesprek</a></div>
+  <!-- Scripts -->
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="/cookie.js" defer></script>
+  <script src="/src/js/nav.js" defer></script>
+
+  <div class="sticky-cta"><a class="btn" href="/contact.html">Plan kennismaking</a></div>
+
+  <!-- No-JS fallback voor menu -->
+  <noscript><style>[data-nav]{display:block!important}</style></noscript>
 </body>
 </html>
