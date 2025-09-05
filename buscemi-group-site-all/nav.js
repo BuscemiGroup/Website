@@ -1,24 +1,23 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const burger = document.querySelector('.burger');
-  const nav = document.querySelector('.nav-links');
-  const dropdown = document.querySelector('.nav-links .dropdown');
-  if (dropdown) {
-    const toggle = dropdown.querySelector('a');
-    toggle.setAttribute('aria-haspopup', 'true');
-    toggle.setAttribute('aria-expanded', 'false');
-    dropdown.addEventListener('focusin', () => {
-      toggle.setAttribute('aria-expanded', 'true');
-    });
-    dropdown.addEventListener('focusout', (e) => {
-      if (!dropdown.contains(e.relatedTarget)) {
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-  if (!burger || !nav) return;
-  burger.addEventListener('click', function () {
-    const isOpen = nav.style.display === 'block';
-    nav.style.display = isOpen ? '' : 'block';
-    burger.setAttribute('aria-expanded', String(!isOpen));
+// Accessible hamburger toggle for mobile nav
+(function(){
+  const btn = document.querySelector('.burger');
+  const nav = document.getElementById('primary-nav');
+  if(!btn || !nav) return;
+  btn.setAttribute('aria-controls', 'primary-nav');
+  btn.setAttribute('aria-expanded', 'false');
+  nav.setAttribute('aria-label', 'Hoofdnavigatie');
+  nav.hidden = true;
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    nav.hidden = open;
+    if(!open){
+      // focus first interactive element when opening for keyboard users
+      const firstLink = nav.querySelector('a, button, input, select, textarea');
+      if(firstLink) firstLink.focus({ preventScroll: true });
+    } else {
+      btn.focus({ preventScroll: true });
+    }
   });
-});
+})();
