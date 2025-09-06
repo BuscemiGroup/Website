@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.buscemigroup.be/</loc><lastmod>2025-09-06</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.buscemigroup.be/over.html</loc><lastmod>2025-09-06</lastmod></url>
-  <url><loc>https://www.buscemigroup.be/contact.html</loc><lastmod>2025-09-06</lastmod></url>
-  <url><loc>https://www.buscemigroup.be/legal.html</loc><lastmod>2025-09-06</lastmod></url>
+  <url><loc>https://www.buscemigroup.be/over.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.buscemigroup.be/contact.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.buscemigroup.be/legal.html</loc><lastmod>2025-09-06</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
-  <url><loc>https://www.buscemigroup.be/diensten/</loc><lastmod>2025-09-06</lastmod></url>
-  <url><loc>https://www.buscemigroup.be/diensten/marketing.html</loc><lastmod>2025-09-06</lastmod></url>
-  <url><loc>https://www.buscemigroup.be/diensten/consultancy.html</loc><lastmod>2025-09-06</lastmod></url>
+  <url><loc>https://www.buscemigroup.be/diensten/</loc><lastmod>2025-09-06</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.buscemigroup.be/diensten/marketing.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.buscemigroup.be/diensten/consultancy.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
-  <url><loc>https://www.buscemigroup.be/bedankt.html</loc><lastmod>2025-09-06</lastmod><robots>noindex</robots></url>
+  <url><loc>https://www.buscemigroup.be/insights/</loc><lastmod>2025-09-06</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.buscemigroup.be/insights/kosten-besparen-met-data.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.buscemigroup.be/insights/social-strategie-30-min.html</loc><lastmod>2025-09-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
