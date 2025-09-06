@@ -6,11 +6,11 @@
 # Redirects (pas aan naar jouw canonieke domein)
 # -------------------------------------------------
 # 👉 Forceer 'www' (vervang naar wens naar non-www)
-[[redirects]]
-  from = "https://buscemigroup.be/*"
-  to = "https://www.buscemigroup.be/:splat"
-  status = 301
-  force = true
+#[[redirects]]
+ # from = "https://buscemigroup.be/*"
+  #to = "https://www.buscemigroup.be/:splat"
+  #status = 301
+  #force = true
 
 # Trailing slash voor directory routes (bv. /diensten)
 [[redirects]]
