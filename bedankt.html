@@ -3,28 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Bedankt voor je bericht | Buscemi Group</title>
-<meta name="description" content="Bedankt voor je bericht. We nemen binnen één werkdag contact met je op." />
-<meta name="robots" content="noindex, nofollow" />
 
+  <title>Bedankt voor je bericht | Buscemi Group</title>
+  <meta name="description" content="Bedankt voor je bericht. We nemen binnen één werkdag contact met je op." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://buscemigroup.be/bedankt.html" />
   <meta name="theme-color" content="#0d1425" />
 
-  <!-- Fonts (optioneel dezelfde als op de site) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Styles (gebruik je bestaande CSS) -->
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/utilities.css" />
 
-  <!-- Open Graph (niet echt nodig met noindex, maar kan geen kwaad) -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Bedankt — Buscemi Group" />
   <meta property="og:description" content="We antwoorden binnen 1 werkdag. Wil je sneller? Plan meteen een kennismaking." />
   <meta property="og:site_name" content="Buscemi Group" />
+  <meta property="og:image" content="https://buscemigroup.be/assets/og-image.png" />
+
+  <!-- Kleine pagina-specifieke accenten -->
   <style>
-    /* Kleine pagina-specifieke accenten, leunen verder op je globale CSS */
     .thanks-hero{padding:clamp(48px,8vw,120px) 0;text-align:center}
     .thanks-hero .kicker{opacity:.8;margin:0 0 8px}
     .thanks-hero h1{margin:.2em 0}
@@ -38,12 +41,41 @@
 <body>
   <a class="visually-hidden skip-link" href="#main">Ga naar hoofdinhoud</a>
 
-  <header class="site-header" role="banner">
+  <!-- Header/nav -->
+  <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="Buscemi Group home">
+      <a class="brand" href="/">
         <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
       </a>
-      <a class="btn primary-cta" href="/#contact">Contact</a>
+
+      <button class="burger"
+              data-nav-toggle
+              aria-label="Hoofdmenu"
+              aria-expanded="false"
+              aria-controls="site-menu">☰</button>
+
+      <nav id="site-menu"
+           class="nav-links"
+           data-nav-menu
+           aria-label="Hoofdnavigatie"
+           aria-hidden="true">
+        <ul class="menu">
+          <li><a href="/over.html" data-nav-link>Over</a></li>
+          <li>
+            <details class="dropdown">
+              <summary>Diensten</summary>
+              <ul class="submenu">
+                <li><a href="/diensten/marketing.html" data-nav-link>Marketing</a></li>
+                <li><a href="/diensten/consultancy.html" data-nav-link>Consultancy</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="/insights/index.html" data-nav-link>Insights</a></li>
+          <li><a href="/contact.html" data-nav-link>Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
     </div>
   </header>
 
@@ -54,7 +86,6 @@
         <h1>We hebben je bericht ontvangen</h1>
         <p class="sub">We antwoorden <strong>binnen 1 werkdag</strong>. Wil je het proces versnellen? Plan meteen een kort kennismakingsgesprek.</p>
         <div class="cta-row">
-          <!-- TODO: vervang Calendly-link en contactgegevens -->
           <a class="btn" href="https://calendly.com/jouw-calendly/intro" target="_blank" rel="noopener">Plan kennismaking</a>
           <a class="btn alt" href="/">Terug naar home</a>
         </div>
@@ -86,13 +117,19 @@
   </footer>
 
   <!-- Scripts -->
-  <script>
-    // Jaar invullen
-    (function(){var y=document.getElementById('year'); if(y){y.textContent=new Date().getFullYear();}})();
+  <script src="/cookie.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/nav.js" defer></script>
 
-    // (Optioneel) Plausible conversie-event
-    // Plausible trackt pageviews automatisch; als je een apart doel wilt:
-    // plausible('Contact formulier ingezonden'); // uncomment indien je een doel met die naam aanmaakt
+  <!-- Jaar in footer -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var y=document.getElementById('year');
+      if (y) y.textContent=new Date().getFullYear();
+    });
   </script>
+
+  <!-- No-JS fallback -->
+  <noscript><style>[data-nav-menu]{display:block!important}</style></noscript>
 </body>
 </html>
