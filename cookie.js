@@ -1,12 +1,14 @@
-/* /cookie.js  —  eenvoudige consent manager (noodzakelijk vs. analytics)
+/* /cookie.js — eenvoudige, lichte consent manager (analytics opt-in)
    - Toont banner bij eerste bezoek
    - Slaat keuze op in localStorage
-   - Laadt Plausible alleen als analytics toegestaan zijn
+   - Laadt Plausible alleen als analytics zijn toegestaan
+   - Respecteert "Do Not Track" (config)
    - Exporteert window.cookieConsent.open() en .reset()
 
-   Vereisten:
-   1) Verwijder Plausible-script uit <head>. Zet je domain hieronder in PLAUSIBLE_DOMAIN.
-   2) Optioneel: zet COOKIELESS_PLAUSIBLE=true als je 100% cookieloze Plausible gebruikt en GEEN consent wil vragen voor analytics.
+   Te doen:
+   1) Verwijder Plausible-script uit <head>.
+   2) Vul PLAUSIBLE_DOMAIN hieronder in.
+   3) (Optioneel) zet COOKIELESS_PLAUSIBLE=true als je cookieloos Plausible gebruikt (geen banner nodig voor analytics).
 */
 
 (function () {
@@ -14,17 +16,20 @@
 
   // ====== CONFIG ======
   var STORAGE_KEY = "bg_consent_v1";
-  var PLAUSIBLE_DOMAIN = "buscemigroup.be";       // <-- pas dit aan
-  var COOKIELESS_PLAUSIBLE = false;               // true = laad Plausible zonder banner/consent (cookieloze setup)
-  var RESPECT_DNT = true;                         // Do Not Track respecteren? (zet analytics standaard uit als DNT aan staat)
-  var BANNER_THEME = "dark";                      // 'dark' of 'light' (alleen voor css-classes)
+  var PLAUSIBLE_DOMAIN = "buscemigroup.be";  // <-- PAS DIT AAN
+  var COOKIELESS_PLAUSIBLE = false;          // true = laad Plausible altijd (cookieloos), geen toestemming nodig
+  var RESPECT_DNT = true;                    // “Do Not Track” respecteren
   // =====================
 
   var doc = document;
   var w = window;
 
+  function $(sel, root) { return (root || doc).querySelector(sel); }
+  function $all(sel, root) { return Array.from((root || doc).querySelectorAll(sel)); }
+
   function loadScript(src, attrs) {
     return new Promise(function (resolve, reject) {
+      if (doc.querySelector('script[src="' + src + '"]')) { resolve(); return; }
       var s = doc.createElement("script");
       s.src = src;
       if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
@@ -34,169 +39,162 @@
     });
   }
 
-  function getStoredConsent() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch (e) { return null; }
+  function getConsent() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+    catch (e) { return null; }
   }
-
-  function storeConsent(data) {
+  function setConsent(obj) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      analytics: !!data.analytics,
+      analytics: !!obj.analytics,
       date: new Date().toISOString(),
       v: 1
     }));
   }
-
   function hasDNT() {
     var dnt = w.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack;
     return ("" + dnt === "1" || "" + dnt === "yes");
   }
 
-  function loadPlausibleIfAllowed(consent) {
-    // Niet laden als al aanwezig
-    if (doc.querySelector('script[src*="plausible.io/js/script"]')) return;
-
+  function loadPlausible(consent) {
     if (COOKIELESS_PLAUSIBLE) {
-      loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
-      return;
+      // Cookieloos: geen toestemming vereist
+      return loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
     }
-
     if (consent && consent.analytics === true) {
-      loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
+      return loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
     }
   }
 
-  // ====== UI (banner + modal) ======
+  // ====== UI ======
   var ui = {
-    el: null,
+    root: null,
     modal: null,
     build: function () {
-      if (this.el) return;
+      if (this.root) return;
+
+      // Banner + modal markup
       var wrap = doc.createElement("div");
       wrap.id = "bg-consent";
-      wrap.className = "consent-wrap " + (BANNER_THEME === "light" ? "consent--light" : "consent--dark");
       wrap.innerHTML = [
-        '<div class="consent-banner">',
-          '<div class="consent-text">',
+        '<div class="bgc-banner" role="dialog" aria-live="polite" aria-label="Cookie melding">',
+          '<div class="bgc-text">',
             '<strong>Cookies</strong>',
-            '<p>We gebruiken noodzakelijke cookies voor basisfuncties en optionele analytics om onze site te verbeteren. Je kan je voorkeuren kiezen.</p>',
+            '<p>We gebruiken noodzakelijke cookies en optionele analytics (anoniem waar mogelijk) om de site te verbeteren.</p>',
           '</div>',
-          '<div class="consent-actions">',
-            '<button class="btn btn-small btn-ghost" data-consent="reject">Weiger</button>',
-            '<button class="btn btn-small btn-alt" data-consent="custom">Instellingen</button>',
-            '<button class="btn btn-small btn-primary" data-consent="accept">Accepteer alles</button>',
+          '<div class="bgc-actions">',
+            '<button class="btn bgc-btn-ghost" data-consent="reject" type="button">Weiger</button>',
+            '<button class="btn alt bgc-btn-alt" data-consent="custom" type="button">Instellingen</button>',
+            '<button class="btn bgc-btn" data-consent="accept" type="button">Accepteer alles</button>',
           '</div>',
         '</div>',
-        '<div class="consent-modal" hidden>',
-          '<div class="consent-card">',
-            '<h3>Cookievoorkeuren</h3>',
-            '<div class="consent-row">',
-              '<div>',
-                '<strong>Noodzakelijk</strong><br>',
-                '<span class="muted">Altijd actief voor veiligheid en basisfunctionaliteit.</span>',
-              '</div>',
-              '<div><input type="checkbox" checked disabled></div>',
+        '<div class="bgc-modal" role="dialog" aria-modal="true" aria-labelledby="bgc-modal-title" hidden>',
+          '<div class="bgc-card">',
+            '<h3 id="bgc-modal-title">Cookievoorkeuren</h3>',
+            '<div class="bgc-row">',
+              '<div><strong>Noodzakelijk</strong><br><span class="muted">Altijd actief voor basisfunctionaliteit en veiligheid.</span></div>',
+              '<div><input type="checkbox" checked disabled aria-label="Noodzakelijk ingeschakeld"></div>',
             '</div>',
-            '<div class="consent-row">',
-              '<div>',
-                '<strong>Analytics</strong><br>',
-                '<span class="muted">Helpt ons verbeteren. We meten anoniem waar mogelijk.</span>',
-              '</div>',
-              '<div><label class="switch"><input id="consent-analytics" type="checkbox"><span class="slider"></span></label></div>',
+            '<div class="bgc-row">',
+              '<div><strong>Analytics</strong><br><span class="muted">Helpt ons verbeteren. We meten anoniem waar mogelijk.</span></div>',
+              '<div><label class="bgc-switch"><input id="bgc-analytics" type="checkbox" aria-label="Analytics toestaan"><span class="bgc-slider"></span></label></div>',
             '</div>',
-            '<div class="consent-modal-actions">',
-              '<button class="btn btn-small btn-ghost" data-consent="modal-cancel">Annuleer</button>',
-              '<button class="btn btn-small btn-primary" data-consent="modal-save">Opslaan</button>',
+            '<div class="bgc-actions-right">',
+              '<button class="btn bgc-btn-ghost" data-consent="modal-cancel" type="button">Annuleer</button>',
+              '<button class="btn bgc-btn" data-consent="modal-save" type="button">Opslaan</button>',
             '</div>',
           '</div>',
         '</div>'
       ].join("");
 
-      // minimale styles (leunen verder op je site)
+      // Light theme CSS (gebruikt je site-variabelen)
       var css = doc.createElement("style");
-      css.textContent =
-        ".consent-wrap{position:fixed;inset:auto 0 0 0;z-index:9999;display:flex;justify-content:center;padding:12px}"+
-        ".consent--dark{background:rgba(0,0,0,.4);backdrop-filter:saturate(120%) blur(8px)}"+
-        ".consent--light{background:rgba(255,255,255,.9);backdrop-filter:saturate(120%) blur(8px)}"+
-        ".consent-banner{max-width:1040px;width:100%;display:flex;gap:12px;align-items:center;background:var(--panel, #14151a);color:var(--text, #f1f5f9);border:1px solid #273244;border-radius:14px;padding:12px 14px}"+
-        ".consent-text p{margin:.25rem 0 0;opacity:.9}"+
-        ".consent-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}"+
-        ".btn-small{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#2d3748;color:#fff}"+
-        ".btn-ghost{background:transparent} .btn-alt{background:rgba(59,130,246,.12)} .btn-primary{background:#3b82f6}"+
-        ".consent-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center}"+
-        ".consent-card{background:var(--panel, #14151a);color:var(--text,#f1f5f9);border:1px solid #273244;border-radius:14px;max-width:560px;width:92%;padding:16px}"+
-        ".consent-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #273244;padding:12px 0}"+
-        ".consent-modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}"+
-        ".muted{opacity:.8}"+
-        ".switch{position:relative;display:inline-block;width:44px;height:24px}"+
-        ".switch input{opacity:0;width:0;height:0}"+
-        ".slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#334155;transition:.2s;border-radius:20px}"+
-        ".slider:before{position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:white;transition:.2s;border-radius:50%}"+
-        "input:checked + .slider{background:#3b82f6} input:checked + .slider:before{transform:translateX(20px)}";
-
+      css.textContent = [
+        ':root{--bgc-bg:var(--bg,#fff);--bgc-text:var(--text,#141414);--bgc-line:var(--line,#ececef);',
+        '--bgc-green:var(--green,#0e4d38);--bgc-green2:var(--green-2,#0b3e2e);--bgc-shadow:var(--shadow,0 6px 24px rgba(0,0,0,.08));',
+        '--bgc-radius:14px}',
+        '#bg-consent{position:fixed;left:0;right:0;bottom:0;z-index:2000;display:flex;justify-content:center;padding:12px}',
+        '.bgc-banner{max-width:1040px;width:100%;display:flex;gap:12px;align-items:center;background:var(--bgc-bg);color:var(--bgc-text);border:1px solid var(--bgc-line);border-radius:var(--bgc-radius);padding:12px 14px;box-shadow:var(--bgc-shadow)}',
+        '.bgc-text p{margin:.25rem 0 0;opacity:.9}',
+        '.bgc-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}',
+        '.bgc-btn{background:var(--bgc-green);color:#fff} .bgc-btn:hover{background:var(--bgc-green2)}',
+        '.bgc-btn-ghost{background:transparent;border:1px solid var(--bgc-line);color:var(--bgc-text)}',
+        '.bgc-btn-ghost:hover{background:#f5f6f7}',
+        '.bgc-btn-alt{border-color:var(--bgc-green);color:var(--bgc-green)} .bgc-btn-alt:hover{background:var(--bgc-green);color:#fff}',
+        '.bgc-modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;place-items:center}',
+        '.bgc-card{background:var(--bgc-bg);color:var(--bgc-text);border:1px solid var(--bgc-line);border-radius:var(--bgc-radius);max-width:560px;width:92%;padding:16px;box-shadow:var(--bgc-shadow)}',
+        '.bgc-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bgc-line);padding:12px 0}',
+        '.bgc-actions-right{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}',
+        '.muted{color:var(--muted,#5e6168)}',
+        '.bgc-switch{position:relative;display:inline-block;width:44px;height:24px}',
+        '.bgc-switch input{opacity:0;width:0;height:0}',
+        '.bgc-slider{position:absolute;cursor:pointer;inset:0;background:#dfe3e8;transition:.2s;border-radius:20px}',
+        '.bgc-slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;transition:.2s;border-radius:50%}',
+        'input:checked + .bgc-slider{background:var(--bgc-green)} input:checked + .bgc-slider:before{transform:translateX(20px)}',
+        '@media (max-width:700px){#bg-consent{padding:12px} .bgc-banner{flex-direction:column;align-items:flex-start}}'
+      ].join('');
       doc.head.appendChild(css);
       doc.body.appendChild(wrap);
 
-      this.el = wrap;
-      this.modal = wrap.querySelector(".consent-modal");
+      this.root = wrap;
+      this.modal = $('.bgc-modal', wrap);
 
-      // Events
-      wrap.addEventListener("click", function (e) {
+      // Buttons
+      wrap.addEventListener('click', function (e) {
         var t = e.target;
-        if (!t || !t.getAttribute) return;
-        var action = t.getAttribute("data-consent");
-        if (!action) return;
+        if (!t.closest('[data-consent]')) return;
+        var action = t.closest('[data-consent]').getAttribute('data-consent');
 
-        if (action === "reject") {
+        if (action === 'reject') {
           ui.hide();
           applyConsent({ analytics: false });
-        } else if (action === "accept") {
+        }
+        if (action === 'accept') {
           ui.hide();
           applyConsent({ analytics: true });
-        } else if (action === "custom") {
+        }
+        if (action === 'custom') {
           ui.openModal();
-        } else if (action === "modal-save") {
-          var analyticsChecked = !!doc.getElementById("consent-analytics").checked;
+        }
+        if (action === 'modal-cancel') {
+          ui.closeModal();
+        }
+        if (action === 'modal-save') {
+          var allowed = !!$('#bgc-analytics').checked;
           ui.closeModal();
           ui.hide();
-          applyConsent({ analytics: analyticsChecked });
-        } else if (action === "modal-cancel") {
-          ui.closeModal();
+          applyConsent({ analytics: allowed });
         }
       });
 
-      // Klik buiten modal sluit ‘m
-      this.modal.addEventListener("click", function(e){
+      // Klik op overlay sluit modal
+      this.modal.addEventListener('click', function (e) {
         if (e.target === ui.modal) ui.closeModal();
       });
     },
     show: function () {
       this.build();
-      this.el.style.display = "flex";
+      this.root.style.display = 'flex';
     },
     hide: function () {
-      if (this.el) this.el.style.display = "none";
+      if (this.root) this.root.style.display = 'none';
     },
     openModal: function () {
       this.build();
-      var analytics = (getStoredConsent() || {}).analytics === true;
+      var saved = getConsent();
       var dnt = RESPECT_DNT && hasDNT();
-      var el = doc.getElementById("consent-analytics");
-      if (el) el.checked = dnt ? false : analytics;
+      var chk = $('#bgc-analytics');
+      if (chk) chk.checked = saved ? !!saved.analytics : !dnt;
       this.modal.hidden = false;
-      this.modal.style.display = "grid";
+      this.modal.style.display = 'grid';
     },
     closeModal: function () {
-      if (this.modal) { this.modal.hidden = true; this.modal.style.display = "none"; }
+      if (this.modal) { this.modal.hidden = true; this.modal.style.display = 'none'; }
     }
   };
 
-  function applyConsent(consent) {
-    storeConsent(consent);
-    loadPlausibleIfAllowed(consent);
+  function applyConsent(c) {
+    setConsent(c);
+    loadPlausible(c);
   }
 
   // ====== Public API ======
@@ -207,45 +205,35 @@
 
   // ====== Init ======
   function init() {
-    // Hook voor #manage-consent (op legal.html bijvoorbeeld)
-    doc.addEventListener("click", function (e) {
+    // Beheer-link (bv. op legal.html)
+    doc.addEventListener('click', function (e) {
       var t = e.target;
-      if (t && t.matches && t.matches("#manage-consent")) {
-        e.preventDefault();
-        w.cookieConsent.open();
+      if (t && t.matches && t.matches('#manage-consent')) {
+        e.preventDefault(); w.cookieConsent.open();
       }
     });
 
-    var existing = getStoredConsent();
+    var saved = getConsent();
 
     if (COOKIELESS_PLAUSIBLE) {
-      // Laad direct; geen banner nodig
-      loadPlausibleIfAllowed({ analytics: true });
+      // Cookieloos: laad meteen, geen banner nodig
+      loadPlausible({ analytics: true });
       return;
     }
 
-    // Respecteer DNT als ingesteld
-    if (!existing && RESPECT_DNT && hasDNT()) {
-      // Auto-weiger analytics, zonder banner (optioneel: toon toch banner; kies hide of show)
-      storeConsent({ analytics: false });
-      // Geen Plausible
+    // Respecteer Do Not Track: standaard analytics uit, zonder banner forceren
+    if (!saved && RESPECT_DNT && hasDNT()) {
+      setConsent({ analytics: false });
       return;
     }
 
-    if (existing) {
-      // Keuze bekend
-      loadPlausibleIfAllowed(existing);
-      return;
-    }
+    // Als er al een keuze is, respecteer die en laad eventueel Plausible
+    if (saved) { loadPlausible(saved); return; }
 
-    // Geen keuze -> toon banner
+    // Geen keuze → toon banner
     ui.show();
   }
 
-  // DOM ready
-  if (doc.readyState === "loading") {
-    doc.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
