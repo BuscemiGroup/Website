@@ -1,4 +1,4 @@
-// nav.js – toegankelijke navigatie met active state & mobiel menu
+// /nav.js – toegankelijke navigatie met active state & mobiel menu
 (() => {
   const qs = (sel, root = document) => root.querySelector(sel)
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel))
@@ -8,7 +8,6 @@
   const links = qsa('[data-nav-link]')
   if (!toggleBtn || !menu) return
 
-  // Helpers
   const focusablesSelector = [
     'a[href]',
     'button:not([disabled])',
@@ -23,7 +22,6 @@
     menu.classList.add('is-open')
     menu.setAttribute('aria-hidden', 'false')
     toggleBtn.setAttribute('aria-expanded', 'true')
-    // focus trap: focus eerste element
     const first = menu.querySelector(focusablesSelector)
     first && first.focus()
     document.addEventListener('keydown', onKeydown)
@@ -38,13 +36,11 @@
   }
   const toggle = () => (isOpen() ? close() : open())
 
-  // Sluit bij klik buiten het menu
   const onDocClick = (e) => {
     if (menu.contains(e.target) || toggleBtn.contains(e.target)) return
     close()
   }
 
-  // Escape sluit; Tab trapt focus binnen het menu
   const onKeydown = (e) => {
     if (e.key === 'Escape') {
       close()
@@ -66,16 +62,13 @@
     }
   }
 
-  // Active link markering (werkt voor “/”, “/index.html” en subpagina’s)
+  // Active link markering (“/”, “/index.html” en subpagina’s)
   const markActive = () => {
     const path = window.location.pathname.replace(/index\.html$/, '').replace(/\/$/, '') || '/'
     links.forEach((a) => {
       const href = a.getAttribute('href') || ''
-      // normaliseer ook href
-      const normHref = href
-        .replace(/^https?:\/\/[^/]+/i, '')
-        .replace(/index\.html$/, '')
-        .replace(/\/$/, '') || '/'
+      const normHref =
+        href.replace(/^https?:\/\/[^/]+/i, '').replace(/index\.html$/, '').replace(/\/$/, '') || '/'
       if (normHref === path) {
         a.classList.add('is-active')
         a.setAttribute('aria-current', 'page')
@@ -86,7 +79,6 @@
     })
   }
 
-  // Klik op toggle
   toggleBtn.addEventListener('click', (e) => {
     e.preventDefault()
     toggle()
@@ -98,14 +90,10 @@
     }
   })
 
-  // Klik op link sluit menu (mobiel)
-  links.forEach((a) =>
-    a.addEventListener('click', () => {
-      close()
-    }),
-  )
+  // Klikken op link sluit menu (mobiel)
+  links.forEach((a) => a.addEventListener('click', () => close()))
 
-  // Smooth scroll voor anchor-links op dezelfde pagina (optioneel)
+  // Smooth scroll voor same-page anchors (optioneel)
   links.forEach((a) => {
     const href = a.getAttribute('href') || ''
     if (href.startsWith('#')) {
@@ -118,7 +106,6 @@
     }
   })
 
-  // Update active state bij load en als de user navigeert binnen de site
   window.addEventListener('DOMContentLoaded', markActive)
   window.addEventListener('popstate', markActive)
   window.addEventListener('hashchange', markActive)
