@@ -1,96 +1,104 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl-BE">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Contact — Buscemi Group</title>
-<meta name="description" content="Neem contact op met Buscemi Group. We reageren meestal binnen één werkdag."/>
-<meta name="theme-color" content="#0e4d38"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="style.css"/>
-<link rel="icon" type="image/png" href="assets/favicon.png"/>
-<meta property="og:image" content="https://www.buscemigroup.be/assets/og-image.png"/>
-<meta property="og:title" content="Contact — Buscemi Group"/>
-<meta property="og:description" content="Neem contact op met Buscemi Group. We reageren meestal binnen één werkdag."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://www.buscemigroup.be/contact.html"/>
-<link rel="canonical" href="https://www.buscemigroup.be/contact.html"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Buscemi Group</title>
+  <meta name="description" content="Neem contact op met Buscemi Group. We antwoorden binnen één werkdag." />
+  <meta name="theme-color" content="#0d1425" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/utilities.css" />
 </head>
 <body>
+  <a class="visually-hidden skip-link" href="#main">Ga naar hoofdinhoud</a>
 
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Buscemi Group"/></a>
-    <nav class="nav-links" aria-label="Hoofdnavigatie">
-      <a href="over.html">Over</a>
-      <div class="dropdown">
-        <a href="diensten/index.html">Diensten ▾</a>
-        <div class="dropdown-content" role="menu">
-          <a href="diensten/marketing.html">Marketing</a>
-          <a href="diensten/consultancy.html">Consultancy</a>
+  <header class="site-header" role="banner">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="Buscemi Group home">
+        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
+      </a>
+      <nav class="nav-links" aria-label="Hoofdnavigatie">
+        <ul class="menu">
+          <li><a href="/over.html">Over</a></li>
+          <li><a href="/diensten/">Diensten</a></li>
+          <li aria-current="page"><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary-cta" href="/#contact">Plan kennismaking</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero container">
+      <div class="grid-2">
+        <div>
+          <h1>Contact</h1>
+          <p>Stel je vraag of plan een kennismaking. We antwoorden <strong>binnen één werkdag</strong>.</p>
+          <div class="card pad" style="margin-top:16px">
+            <p class="muted" style="margin:0">
+              E-mail: <a href="mailto:info@buscemigroup.be">info@buscemigroup.be</a><br />
+              Tel: <a href="tel:+324XXXXXXXX">+32 4X XX XX XXX</a><br />
+              Adres: ⚠️ Straat, nr — Postcode Gemeente
+            </p>
+          </div>
         </div>
       </div>
-      <a href="insights/index.html">Insights</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <a class="btn" href="contact.html">Plan kennismaking</a>
-    <button class="burger" aria-label="Menu" aria-expanded="false">☰</button>
-  </div>
-</header>
+    </section>
 
-<main class="container">
-  <section class="subpage-hero">
-    <h1>Contact</h1>
-    <p class="sub">We reageren meestal binnen één werkdag.</p>
-  </section>
-    <div class="content">
-    <p>Vul het formulier in of gebruik de onderstaande gegevens om ons te bereiken.</p>
-      <form class="mt-20 max-w-560" method="POST" data-netlify="true" netlify-honeypot="bot-field" name="contact">
-      <input type="hidden" name="form-name" value="contact"/>
-        <p class="hidden"><label>Laat dit veld leeg: <input name="bot-field"/></label></p>
-      <div class="row">
-        <label>Naam<br/><input required name="name" placeholder="Voor- en achternaam"/></label>
-        <label>Bedrijf<br/><input name="company" placeholder="Bedrijfsnaam"/></label>
-      </div>
-      <div class="row">
-        <label>E-mail<br/><input required name="email" type="email" placeholder="naam@bedrijf.be"/></label>
-        <label>Telefoon<br/><input name="phone" type="tel" placeholder="+32 ..."/></label>
-      </div>
-      <label>Onderwerp<br/><input name="subject" placeholder="Waarover wil je praten?"/></label>
-      <label>Bericht<br/><textarea required name="message" rows="5" placeholder="Vertel kort wat je zoekt of waar je tegenaan loopt."></textarea></label>
-        <div class="flex gap-12 items-center mt-8">
-        <button class="btn" type="submit">Verstuur</button>
-        <a class="btn alt" href="mailto:info@buscemigroup.be">Mail rechtstreeks</a>
-      </div>
-    </form>
-      <h3 class="mt-40">Gegevens</h3>
-    <ul class="muted">
-      <li><strong>E-mail:</strong> info@buscemigroup.be</li>
-      <li><strong>Telefoon:</strong> +32 4x xx xx xxx</li>
-      <li><strong>Adres:</strong> —</li>
-      <li><strong>Ondernemingsnr/BTW:</strong> —</li>
-    </ul>
-      <div class="cta mt-36 max-w-720">
-      <p><strong>Klaar voor een verkennend gesprek?</strong> We bekijken meteen waar de snelste winst zit.</p>
-      <a class="btn" href="contact.html">Plan gesprek</a>
-    </div>
-  </div>
-</main>
+    <!-- Formulier -->
+    <section class="container mt-20">
+      <div class="grid-2">
+        <div class="card pad">
+          <h2 class="mt-0">Stuur ons een bericht</h2>
+          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="vakantie" action="/bedankt.html" novalidate>
+            <input type="hidden" name="form-name" value="contact" />
+            <!-- Honeypot -->
+            <p class="visually-hidden">
+              <label>Laat dit veld leeg: <input name="vakantie" /></label>
+            </p>
 
-<footer>
-    <div class="container flex justify-between items-center gap-12 flex-wrap">
-      <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
-      <div class="muted"><a href="legal.html">Privacy</a> • <a href="legal.html">Cookies</a> • <a href="legal.html">Algemene voorwaarden</a></div>
-    </div>
-</footer>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-<script src="cookie.js"></script>
-<script src="/js/analytics.js" defer></script>
+            <label class="field">
+              <span>Naam*</span>
+              <input type="text" name="naam" autocomplete="name" required />
+            </label>
 
-<script src="nav.js"></script>
+            <label class="field">
+              <span>E-mail*</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
 
-<div class="sticky-cta"><a class="btn" href="contact.html">Plan gesprek</a></div>
-</body>
-</html>
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:12px;">
+              <label class="field">
+                <span>Bedrijf</span>
+                <input type="text" name="bedrijf" autocomplete="organization" />
+              </label>
+              <label class="field">
+                <span>Telefoon</span>
+                <input type="tel" name="telefoon" autocomplete="tel" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Waarmee kunnen we helpen?*</span>
+              <textarea name="vraag" rows="6" required></textarea>
+            </label>
+
+            <label class="field" style="align-items:flex-start;">
+              <input type="checkbox" name="privacy" required style="margin-top:4px" />
+              <span class="muted" style="margin-left:8px">
+                Ik ga akkoord met de <a href="/legal.html" target="_blank" rel="noopener">privacyvoorwaarden</a>.
+              </span>
+            </label>
+
+            <div class="form__actions" style="margin-top:12px; display:flex; gap:12px; align-items:center;">
+              <button type="submit" class="btn">Verstuur</button>
+              <p class="form__note muted" style="margin:0;">We antwoorden binnen één werkdag.</p>
+            </div>
+          </form>
+        </div>
+
+        <aside class="card pad">
+          <h2 class="mt-0">Liever meteen plannen?</h2>
+          <!-- Vervang door je echte Calendly-link of verwijder deze kaart -->
+          <p class="muted">Kies een moment dat past. We bellen/meet’n
