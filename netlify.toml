@@ -2,25 +2,64 @@
 [build]
   publish = "."
 
-# ---------- Redirects ----------
+# -------------------------------------------------
+# Redirects (pas aan naar jouw canonieke domein)
+# -------------------------------------------------
+# 👉 Forceer 'www' (vervang naar wens naar non-www)
+[[redirects]]
+  from = "https://buscemigroup.be/*"
+  to = "https://www.buscemigroup.be/:splat"
+  status = 301
+  force = true
+
+# Trailing slash voor directory routes (bv. /diensten)
 [[redirects]]
   from = "/diensten"
   to = "/diensten/"
   status = 301
   force = true
 
-# ---------- Global security headers ----------
+# -------------------------------------------------
+# Global Security Headers
+# -------------------------------------------------
 [[headers]]
   for = "/*"
   [headers.values]
+    # Transport & TLS
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Framing & MIME sniffing & referrers
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), camera=(), microphone=(), interest-cohort=()"
-    # Minimalistische CSP – pas domeinen aan indien je extra scripts/fonts laadt
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' plausible.io; connect-src 'self' plausible.io; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
-# ---------- Long-cache voor static assets ----------
+    # Browser features
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+
+    # XSS (legacy; moderne browsers gebruiken CSP)
+    X-XSS-Protection = "0"
+
+    # Content Security Policy
+    # - 'unsafe-inline' is nodig zolang je inline <script> en style-attributen gebruikt.
+    # - Voeg hier extra domeinen toe als je later bv. Calendly embedt.
+    Content-Security-Policy = """
+      default-src 'self';
+      base-uri 'self';
+      frame-ancestors 'self';
+      object-src 'none';
+      upgrade-insecure-requests;
+      img-src 'self' data: https:;
+      font-src 'self' data: https://fonts.gstatic.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      script-src 'self' 'unsafe-inline' https://plausible.io;
+      connect-src 'self' https://plausible.io;
+      form-action 'self'
+    """
+
+# -------------------------------------------------
+# Caching
+# -------------------------------------------------
+# Lange cache voor statische assets
 [[headers]]
   for = "/assets/*"
   [headers.values]
@@ -36,9 +75,19 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# ---------- Kort-cache voor HTML ----------
+# Korte cache voor HTML (mag vaker verversen)
 [[headers]]
   for = "/*"
   [headers.values]
-    # Netlify matched hier ook HTML; overschrijft de asset-routes niet
     Cache-Control = "public, max-age=300, must-revalidate"
+
+# (Optioneel) iets langere cache voor sitemap/robots
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
