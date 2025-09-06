@@ -183,3 +183,15 @@ form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   #cookie-banner{left:12px;right:12px;bottom:12px}
   #cookie-banner .cookie-wrap{flex-direction:column;align-items:flex-start}
 }
+
+/* nav states voor JS */
+.nav-links { display: none; }
+.nav-links.is-open { display: block; }
+
+/* active link + keyboard focus */
+a.is-active { text-decoration: underline; font-weight: 600; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* (optioneel) desktop altijd zichtbaar */
+@media (min-width: 960px) { .nav-links { display: block; } }
+
