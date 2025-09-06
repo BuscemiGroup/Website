@@ -1,4 +1,3 @@
-
 :root{
   --bg: #ffffff;
   --text: #141414;
@@ -14,7 +13,8 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.7}
 img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
+a{color:inherit;text-decoration:none;transition: color .25s, text-decoration-color .25s}
+a:hover{color:var(--green);text-decoration:underline;text-decoration-color:var(--gold)}
 .container{max-width:var(--max);margin:0 auto;padding:0 24px}
 
 /* Utility classes */
@@ -42,6 +42,9 @@ a{color:inherit;text-decoration:none}
 .hidden{display:none}
 .kicker{letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:#c9a227;font-weight:700}
 .content{padding:32px 0}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.center{text-align:center}
 
 /* Header */
 header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
@@ -54,11 +57,46 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);border-b
 .btn.alt{background:transparent;border:1px solid var(--green);color:var(--green)}
 .btn.alt:hover{background:var(--green);color:#fff}
 
-/* Mobile nav */
+/* Burger (mobiel) */
 .burger{display:none;background:none;border:0;font-size:20px}
-@media(max-width:900px){
-  .nav-links{display:none}
+@media (max-width:900px){
   .burger{display:block}
+}
+
+/* --- NAV (werkt samen met nav.js) --------------------------------------- */
+/* basis: verborgen; JS zet .is-open */
+.nav-links{display:none; position:relative}
+.nav-links.is-open{display:block}
+
+/* menu lijst reset */
+.nav-links .menu{list-style:none; margin:0; padding:0}
+.nav-links .menu > li{margin:0; padding:0}
+
+/* active link + keyboard focus */
+a.is-active{ text-decoration:underline; font-weight:600 }
+:focus-visible{ outline:2px solid currentColor; outline-offset:2px }
+
+/* dropdown met <details> */
+.dropdown{ position:relative }
+.dropdown > summary{ cursor:pointer; list-style:none }
+.dropdown > summary::-webkit-details-marker{ display:none }
+
+/* submenu basis */
+.submenu{ list-style:none; margin:.5rem 0 0; padding-left:1rem }
+
+/* desktop layout */
+@media (min-width:960px){
+  /* menu altijd zichtbaar op desktop */
+  .nav-links{ display:block }
+  .nav-links .menu{ display:flex; gap:1.25rem; align-items:center }
+  /* submenu als flyout */
+  .submenu{
+    position:absolute; left:0; top:100%;
+    margin:0; padding:.5rem 0; min-width:200px;
+    background:#fff; border:1px solid rgba(0,0,0,.08);
+    box-shadow:0 8px 24px rgba(0,0,0,.08); display:none
+  }
+  .dropdown[open] .submenu{ display:block }
 }
 
 /* Sections */
@@ -68,10 +106,13 @@ h2{font-size:34px;line-height:1.25;margin:0 0 12px}
 .sub{color:var(--muted);max-width:760px}
 
 /* Hero */
-.hero{padding:120px 0 80px;background:
-  radial-gradient(800px 400px at 10% -10%, #f4f6f5 0, rgba(255,255,255,0) 70%),
-  radial-gradient(700px 400px at 110% 10%, #f7f4ec 0, rgba(255,255,255,0) 70%),
-  linear-gradient(180deg,#ffffff, #fafafa)}
+.hero{
+  padding:120px 0 80px;
+  background:
+    radial-gradient(800px 400px at 10% -10%, #f4f6f5 0, rgba(255,255,255,0) 70%),
+    radial-gradient(700px 400px at 110% 10%, #f7f4ec 0, rgba(255,255,255,0) 70%),
+    linear-gradient(180deg,#ffffff, #fafafa)
+}
 .hero h1{font-size:clamp(36px,5vw,62px);line-height:1.12;margin:0}
 .hero .accent{color:var(--green)}
 .hero p{color:var(--muted);max-width:720px;margin:14px 0 28px}
@@ -108,28 +149,6 @@ h2{font-size:34px;line-height:1.25;margin:0 0 12px}
 
 /* Footer */
 footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
-
-/* Small helpers */
-.muted{color:var(--muted)}
-.gold{color:var(--gold)}
-.center{text-align:center}
-
-/* Links hover */
-a{transition: color .25s, text-decoration-color .25s}
-a:hover{color:var(--green);text-decoration:underline;text-decoration-color:var(--gold)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
-
-/* Subpagina header */
-.subpage-hero{padding:60px 0;background:linear-gradient(180deg,#ffffff, #f8f8f8);text-align:center;border-bottom:1px solid var(--line)}
-.subpage-hero h1{font-size:clamp(28px,4vw,44px);margin:0}
-
-/* Dropdown menu voor Diensten */
-.nav-links{position:relative;display:flex;align-items:center;gap:8px}
-.nav-links .dropdown{position:relative;display:inline-block}
-.nav-links .dropdown-content{display:none;position:absolute;background:#fff;border:1px solid var(--line);border-radius:var(--radius);min-width:220px;box-shadow:var(--shadow);z-index:99;margin-top:8px;overflow:hidden}
-.nav-links .dropdown-content a{display:block;padding:10px 14px;font-size:14px;white-space:nowrap}
-.nav-links .dropdown:hover .dropdown-content{display:block}
-.nav-links .dropdown:focus-within .dropdown-content{display:block}
 
 /* Forms */
 input, textarea, select{
@@ -183,15 +202,3 @@ form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   #cookie-banner{left:12px;right:12px;bottom:12px}
   #cookie-banner .cookie-wrap{flex-direction:column;align-items:flex-start}
 }
-
-/* nav states voor JS */
-.nav-links { display: none; }
-.nav-links.is-open { display: block; }
-
-/* active link + keyboard focus */
-a.is-active { text-decoration: underline; font-weight: 600; }
-:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-
-/* (optioneel) desktop altijd zichtbaar */
-@media (min-width: 960px) { .nav-links { display: block; } }
-
