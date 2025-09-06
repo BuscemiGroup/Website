@@ -46,6 +46,14 @@ a:hover{color:var(--green);text-decoration:underline;text-decoration-color:var(-
 .gold{color:var(--gold)}
 .center{text-align:center}
 
+.visually-hidden{
+  position:absolute!important;
+  width:1px;height:1px;
+  margin:-1px;padding:0;border:0;
+  white-space:nowrap;clip-path:inset(50%);clip:rect(0 0 0 0);
+  overflow:hidden
+}
+
 /* Header */
 header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
@@ -175,30 +183,8 @@ form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sticky-cta{position:fixed;right:20px;bottom:20px;z-index:100}
 .sticky-cta .btn{border-radius:999px;padding:14px 24px;font-size:15px}
 
-/* Cookie banner */
-#cookie-banner{
-  position: fixed;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  z-index: 2000;
-  background: #ffffff;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  box-shadow: var(--shadow);
-  padding: 14px;
+@media (max-width:700px){
+  section{ padding:64px 0; }
 }
-#cookie-banner .cookie-wrap{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-}
-#cookie-banner .cookie-text{color:var(--muted);font-size:14px}
-#cookie-banner .cookie-text a{text-decoration:underline}
-#cookie-banner .cookie-actions{display:flex;gap:8px}
-#cookie-banner .cookie-actions .btn{padding:10px 16px}
-@media(max-width:700px){
-  #cookie-banner{left:12px;right:12px;bottom:12px}
-  #cookie-banner .cookie-wrap{flex-direction:column;align-items:flex-start}
+
 }
