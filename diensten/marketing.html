@@ -3,46 +3,143 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Marketing voor KMO’s | Buscemi Group</title>
-<meta name="description" content="Van social media tot advertenties: wij zorgen voor consistente marketing die meer leads en omzet oplevert voor KMO’s." />
 
+  <title>Marketing voor KMO’s | Buscemi Group</title>
+  <meta name="description" content="Resultaatgerichte marketing voor KMO’s: van strategie en content tot social ads, SEO/SEA en e-mail. Consistente groei met duidelijke KPI’s." />
+  <link rel="canonical" href="https://buscemigroup.be/diensten/marketing.html" />
+  <meta name="theme-color" content="#0d1425" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/utilities.css" />
+
+  <!-- Icons & PWA -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://buscemigroup.be/diensten/marketing.html" />
+  <meta property="og:site_name" content="Buscemi Group" />
+  <meta property="og:title" content="Marketing voor KMO’s | Buscemi Group" />
+  <meta property="og:description" content="Van strategie en content tot social ads, SEO/SEA en e-mail. Consistente groei met duidelijke KPI’s." />
+  <meta property="og:image" content="https://buscemigroup.be/assets/og-image.png" />
+  <meta property="og:locale" content="nl_BE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Marketing voor KMO’s | Buscemi Group" />
+  <meta name="twitter:description" content="Van strategie en content tot social ads, SEO/SEA en e-mail. Consistente groei met duidelijke KPI’s." />
+  <meta name="twitter:image" content="https://buscemigroup.be/assets/og-image.png" />
+
+  <!-- Skip-link styling -->
+  <style>
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;z-index:1000;background:#fff;outline:2px solid currentColor}
+  </style>
 </head>
 <body>
-  <a class="visually-hidden skip-link" href="#main">Ga naar hoofdinhoud</a>
+  <a class="skip-link" href="#main">Ga naar hoofdinhoud</a>
 
+  <!-- Header/nav consistent -->
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="Buscemi Group home">
-        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" />
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
       </a>
-      <a class="btn primary-cta" href="/#contact">Plan kennismaking</a>
+
+      <button class="burger"
+              data-nav-toggle
+              aria-label="Hoofdmenu"
+              aria-expanded="false"
+              aria-controls="site-menu">☰</button>
+
+      <nav id="site-menu"
+           class="nav-links"
+           data-nav-menu
+           aria-label="Hoofdnavigatie"
+           aria-hidden="true">
+        <ul class="menu">
+          <li><a href="/over.html" data-nav-link>Over</a></li>
+          <li>
+            <details class="dropdown" open>
+              <summary>Diensten</summary>
+              <ul class="submenu">
+                <li><a href="/diensten/marketing.html" data-nav-link>Marketing</a></li>
+                <li><a href="/diensten/consultancy.html" data-nav-link>Consultancy</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="/insights/index.html" data-nav-link>Insights</a></li>
+          <li><a href="/contact.html" data-nav-link>Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
     </div>
   </header>
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero container">
-      <div class="grid-2">
-        <div>
-          <h1>Marketing die <span class="accent">resultaat oplevert</span></h1>
-          <p>We bouwen een consistente merkbeleving en campagnes die werken. Geen losse posts of advertenties zonder plan — wel marketing die groei en leads oplevert.</p>
-          <a class="btn" href="/#contact">Plan kennismaking</a>
-        </div>
+    <section class="subpage-hero">
+      <div class="container">
+        <h1>Marketing die <span class="accent">consequent resultaat</span> oplevert</h1>
+        <p class="sub mx-auto max-w-760">Strategie, creatie en performance onder één dak. We bouwen een consistente merkbeleving en campagnes die converteren — met KPI’s die tellen.</p>
+        <p class="mt-12"><a class="btn" href="/contact.html">Plan kennismaking</a></p>
       </div>
     </section>
 
-    <!-- PROBLEEM & AANPAK -->
+    <!-- KERN-DIENSTEN -->
     <section class="container mt-20">
-      <h2>Jouw uitdaging</h2>
-      <p>Veel KMO’s investeren tijd en budget in marketing, maar zien weinig rendement. Versnipperde acties zonder strategie leiden zelden tot duurzame groei.</p>
+      <h2>Wat we doen</h2>
+      <div class="grid-3 mt-12">
+        <article class="card pad tile">
+          <h3>Strategie & Positionering</h3>
+          <p>Doelgroep, propositie en kanalen scherp krijgen. Content-pilaren en KPI’s vastleggen.</p>
+        </article>
+        <article class="card pad tile">
+          <h3>Content & Creatie</h3>
+          <p>Copy, visuals en video die het merk dragen. Repurpose-flows om rendement uit content te halen.</p>
+        </article>
+        <article class="card pad tile">
+          <h3>Social & Advertising</h3>
+          <p>Meta, LinkedIn, Google Ads. Campagnes opgezet op conversie, continu bijgestuurd met data.</p>
+        </article>
+        <article class="card pad tile">
+          <h3>SEO & SEA</h3>
+          <p>Techniek, content en autoriteit. Zoekcampagnes en landingspagina’s die converteren.</p>
+        </article>
+        <article class="card pad tile">
+          <h3>E-mail & Automations</h3>
+          <p>Nurture-flows, segmentatie en lead-scoring. Van lead naar klant met minimale frictie.</p>
+        </article>
+        <article class="card pad tile">
+          <h3>Analytics & KPI’s</h3>
+          <p>Dashboarding, A/B-testen en rapportage. Heldere learnings en concrete next steps.</p>
+        </article>
+      </div>
+    </section>
 
-      <h2 class="mt-20">Onze aanpak</h2>
+    <!-- AANPAK -->
+    <section class="container mt-20">
+      <h2>Onze aanpak</h2>
       <ul class="grid-3 mt-12">
-        <li class="card pad tile"><h3>1. Analyse</h3><p>We bekijken je huidige kanalen, doelgroep en resultaten.</p></li>
-        <li class="card pad tile"><h3>2. Plan</h3><p>We bouwen een roadmap met prioriteiten, doelstellingen en budget.</p></li>
-        <li class="card pad tile"><h3>3. Uitvoering</h3><p>We voeren campagnes uit, testen en optimaliseren continu.</p></li>
+        <li class="card pad tile">
+          <h3>1. Plan</h3>
+          <p>Campagneroofmap per kwartaal met duidelijke doelstellingen en budget.</p>
+        </li>
+        <li class="card pad tile">
+          <h3>2. Productie</h3>
+          <p>Content en advertenties aanmaken, landingspagina’s opzetten, tracking correct.</p>
+        </li>
+        <li class="card pad tile">
+          <h3>3. Optimalisatie</h3>
+          <p>Wekelijkse iteraties op creatives, targeting en biedingen. Maandrapport met learnings.</p>
+        </li>
       </ul>
     </section>
 
@@ -50,18 +147,21 @@
     <section class="container mt-20">
       <h2>Wat je krijgt</h2>
       <ul class="grid-2 mt-12">
-        <li class="card pad">Contentkalender en campagneplanning</li>
-        <li class="card pad">Consistente merkpositionering</li>
-        <li class="card pad">Social media posts en advertenties</li>
-        <li class="card pad">Maandelijkse rapportage en verbeteracties</li>
+        <li class="card pad">Content-kalender en formatbibliotheek</li>
+        <li class="card pad">Campagnes (social/zoek) met duidelijke KPI’s</li>
+        <li class="card pad">Landingspagina’s en trackingplan</li>
+        <li class="card pad">Maandrapportage met next steps</li>
       </ul>
     </section>
 
-    <!-- DOORLOOPTIJD & PRIJS -->
+    <!-- PRAKTISCH -->
     <section class="container mt-20">
       <h2>Praktisch</h2>
-      <p><strong>Doorlooptijd:</strong> eerste resultaten binnen 2–3 maanden.<br>
-         <strong>Prijsindicatie:</strong> vanaf €1.500/maand (afhankelijk van scope en kanalen).</p>
+      <p>
+        <strong>Opstart:</strong> plan + setup in 2–4 weken.<br />
+        <strong>Samenwerking:</strong> retainer of project (min. 3 maanden aanbevolen voor leercurve).<br />
+        <strong>Budget:</strong> afhankelijk van scope; media-budget apart.
+      </p>
     </section>
 
     <!-- MINI-CASE -->
@@ -69,9 +169,9 @@
       <h2>Case in de kijker</h2>
       <figure class="card pad max-w-760 mx-auto text-center">
         <blockquote>
-          <p><em>“Na 3 maanden zagen we +40% meer kwalitatieve leads via social media en campagnes. De rapportage gaf ons houvast om verder te groeien.”</em></p>
+          <p><em>“Nieuwe contentformats en duidelijke landingspagina’s zorgden voor 2× meer kwalitatieve leads binnen hetzelfde mediabudget.”</em></p>
         </blockquote>
-        <figcaption class="muted">— CEO van een Belgische KMO</figcaption>
+        <figcaption class="muted">— Marketingverantwoordelijke, Belgische KMO</figcaption>
       </figure>
     </section>
 
@@ -80,20 +180,20 @@
       <h2>Veelgestelde vragen</h2>
       <div class="grid-2 mt-12">
         <div class="card pad">
-          <h3>Hoe snel zien we resultaat?</h3>
-          <p>Meestal binnen 2–3 maanden, afhankelijk van je startpositie en sector.</p>
+          <h3>Werken jullie met bestaande teams?</h3>
+          <p>Zeker. We versterken je interne marketing en werken samen met vaste partners waar nodig.</p>
         </div>
         <div class="card pad">
-          <h3>Werken jullie met contracten?</h3>
-          <p>We starten meestal met een proefperiode van 3 maanden. Daarna verlengen we flexibel per kwartaal.</p>
+          <h3>Kunnen jullie alles meten?</h3>
+          <p>We zetten correcte tracking op (GA4/Tag Manager) en maken een dashboard met de KPI’s die ertoe doen.</p>
         </div>
         <div class="card pad">
-          <h3>Moeten wij zelf content aanleveren?</h3>
-          <p>We werken samen: wij creëren en optimaliseren, jij geeft input en feedback.</p>
+          <h3>Doen jullie ook branding?</h3>
+          <p>Ja, van brand story tot visuele guidelines. We koppelen branding altijd aan performance-doelen.</p>
         </div>
         <div class="card pad">
-          <h3>Is dit ook geschikt voor kleine KMO’s?</h3>
-          <p>Ja, we stemmen de scope af op je budget en prioriteiten. Vanaf €1.500/maand.</p>
+          <h3>Is AI betrokken?</h3>
+          <p>We gebruiken AI waar het waarde toevoegt (varianten genereren, analysenotes, samenvattingen), altijd met kwaliteitscontrole.</p>
         </div>
       </div>
     </section>
@@ -101,21 +201,35 @@
     <!-- CONTACT CTA -->
     <section class="container my-60">
       <div class="cta center">
-        <p><strong>Klaar om je marketing op de rails te zetten?</strong></p>
-        <a class="btn" href="/#contact">Plan kennismaking</a>
+        <p><strong>Klaar om je marketing op te schalen?</strong></p>
+        <a class="btn" href="/contact.html">Plan kennismaking</a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container flex justify-between items-center gap-12 flex-wrap">
-      <div>© <span id="year"></span> Buscemi Group</div>
-      <div class="muted"><a href="/legal.html">Privacy & Voorwaarden</a></div>
+      <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+      <div class="muted">
+        <a href="/legal.html">Privacy</a> • <a href="/legal.html">Cookies</a> • <a href="/legal.html">Algemene voorwaarden</a>
+      </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="/cookie.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/nav.js" defer></script>
+
+  <!-- Jaar in footer -->
   <script>
-    (function(){var y=document.getElementById("year");if(y)y.textContent=new Date().getFullYear();})();
+    document.addEventListener('DOMContentLoaded', function () {
+      var y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    });
   </script>
+
+  <!-- No-JS fallback voor menu -->
+  <noscript><style>[data-nav-menu]{display:block!important}</style></noscript>
 </body>
 </html>
