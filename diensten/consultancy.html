@@ -3,37 +3,93 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Consultancy voor KMO’s | Buscemi Group</title>
-<meta name="description" content="Praktische consultancy voor KMO’s: kostenoptimalisatie, betere processen en een helder groeiplan met duidelijke KPI’s." />
+
+  <title>Consultancy voor KMO’s | Buscemi Group</title>
+  <meta name="description" content="Praktische consultancy voor KMO’s: kostenoptimalisatie, strakkere processen en een helder groeiplan met duidelijke KPI’s." />
+  <link rel="canonical" href="https://buscemigroup.be/diensten/consultancy.html" />
+  <meta name="theme-color" content="#0d1425" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/utilities.css" />
 
-  <!-- Open Graph (optioneel) -->
+  <!-- Icons & PWA -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://buscemigroup.be/diensten/consultancy.html" />
+  <meta property="og:site_name" content="Buscemi Group" />
   <meta property="og:title" content="Consultancy voor KMO’s | Buscemi Group" />
   <meta property="og:description" content="Kostenoptimalisatie, strategie en efficiëntere processen voor KMO’s. Snel resultaat met een haalbaar plan en duidelijke KPI’s." />
+  <meta property="og:image" content="https://buscemigroup.be/assets/og-image.png" />
+  <meta property="og:locale" content="nl_BE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Consultancy voor KMO’s | Buscemi Group" />
+  <meta name="twitter:description" content="Kostenoptimalisatie, strategie en efficiëntere processen voor KMO’s. Snel resultaat met een haalbaar plan en duidelijke KPI’s." />
+  <meta name="twitter:image" content="https://buscemigroup.be/assets/og-image.png" />
+
+  <!-- Skip-link styling -->
+  <style>
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;z-index:1000;background:#fff;outline:2px solid currentColor}
+  </style>
 </head>
 <body>
-  <a class="visually-hidden skip-link" href="#main">Ga naar hoofdinhoud</a>
+  <a class="skip-link" href="#main">Ga naar hoofdinhoud</a>
 
+  <!-- Header/nav consistent -->
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="Buscemi Group home">
-        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" />
+      <a class="brand" href="/">
+        <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
       </a>
-      <a class="btn primary-cta" href="/#contact">Plan kennismaking</a>
+
+      <button class="burger"
+              data-nav-toggle
+              aria-label="Hoofdmenu"
+              aria-expanded="false"
+              aria-controls="site-menu">☰</button>
+
+      <nav id="site-menu"
+           class="nav-links"
+           data-nav-menu
+           aria-label="Hoofdnavigatie"
+           aria-hidden="true">
+        <ul class="menu">
+          <li><a href="/over.html" data-nav-link>Over</a></li>
+          <li>
+            <details class="dropdown" open>
+              <summary>Diensten</summary>
+              <ul class="submenu">
+                <li><a href="/diensten/marketing.html" data-nav-link>Marketing</a></li>
+                <li><a href="/diensten/consultancy.html" data-nav-link>Consultancy</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="/insights/index.html" data-nav-link>Insights</a></li>
+          <li><a href="/contact.html" data-nav-link>Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
     </div>
   </header>
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero container">
-      <div class="grid-2">
-        <div>
-          <h1>Consultancy die <span class="accent">rust en rendement</span> brengt</h1>
-          <p>We helpen KMO’s om heldere keuzes te maken: <strong>kosten omlaag</strong>, <strong>processen strakker</strong> en <strong>strategie scherp</strong>. Geen dikke rapporten die in de kast verdwijnen, wel een plan dat je meteen kan uitvoeren.</p>
-          <a class="btn" href="/#contact">Plan kennismaking</a>
-        </div>
+    <section class="subpage-hero">
+      <div class="container">
+        <h1>Consultancy die <span class="accent">rust en rendement</span> brengt</h1>
+        <p class="sub mx-auto max-w-760">Heldere keuzes, minder ruis: kosten omlaag, processen strakker en strategie scherp — met KPI’s die je vooruit helpen.</p>
+        <p class="mt-12"><a class="btn" href="/contact.html">Plan kennismaking</a></p>
       </div>
     </section>
 
@@ -75,12 +131,12 @@
       </ul>
     </section>
 
-    <!-- DOORLOOPTIJD & PRIJS -->
+    <!-- PRAKTISCH -->
     <section class="container mt-20">
       <h2>Praktisch</h2>
       <p>
-        <strong>Doorlooptijd:</strong> quickscan en roadmap in 4–6 weken; eerste resultaten binnen 30–60 dagen.<br>
-        <strong>Samenwerking:</strong> traject op maat met vaste milestones en rapportering.<br>
+        <strong>Doorlooptijd:</strong> quickscan en roadmap in 4–6 weken; eerste resultaten binnen 30–60 dagen.<br />
+        <strong>Samenwerking:</strong> traject op maat met vaste milestones en rapportering.<br />
         <strong>Prijsindicatie:</strong> vanaf €1.800/dag of trajectprijs op maat (na intake).
       </p>
     </section>
@@ -123,20 +179,34 @@
     <section class="container my-60">
       <div class="cta center">
         <p><strong>Klaar voor meer rust en rendement?</strong></p>
-        <a class="btn" href="/#contact">Plan kennismaking</a>
+        <a class="btn" href="/contact.html">Plan kennismaking</a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container flex justify-between items-center gap-12 flex-wrap">
-      <div>© <span id="year"></span> Buscemi Group</div>
-      <div class="muted"><a href="/legal.html">Privacy & Voorwaarden</a></div>
+      <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
+      <div class="muted">
+        <a href="/legal.html">Privacy</a> • <a href="/legal.html">Cookies</a> • <a href="/legal.html">Algemene voorwaarden</a>
+      </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="/cookie.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/nav.js" defer></script>
+
+  <!-- Jaar in footer -->
   <script>
-    (function(){var y=document.getElementById("year");if(y)y.textContent=new Date().getFullYear();})();
+    document.addEventListener('DOMContentLoaded', function () {
+      var y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    });
   </script>
+
+  <!-- No-JS fallback voor menu -->
+  <noscript><style>[data-nav-menu]{display:block!important}</style></noscript>
 </body>
 </html>
