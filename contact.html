@@ -3,92 +3,136 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Contacteer ons | Buscemi Group</title>
-<meta name="description" content="Neem contact op met Buscemi Group voor een vrijblijvende kennismaking. We antwoorden binnen één werkdag." />
+
+  <title>Contacteer ons | Buscemi Group</title>
+  <meta name="description" content="Neem contact op met Buscemi Group voor een vrijblijvende kennismaking. We antwoorden binnen één werkdag." />
+  <link rel="canonical" href="https://buscemigroup.be/contact.html" />
   <meta name="theme-color" content="#0d1425" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/utilities.css" />
+
+  <!-- Icons & PWA -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://buscemigroup.be/contact.html" />
+  <meta property="og:site_name" content="Buscemi Group" />
+  <meta property="og:title" content="Contacteer ons | Buscemi Group" />
+  <meta property="og:description" content="Neem contact op met Buscemi Group voor een vrijblijvende kennismaking. We antwoorden binnen één werkdag." />
+  <meta property="og:image" content="https://buscemigroup.be/assets/og-image.png" />
+  <meta property="og:locale" content="nl_BE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contacteer ons | Buscemi Group" />
+  <meta name="twitter:description" content="Neem contact op met Buscemi Group voor een vrijblijvende kennismaking. We antwoorden binnen één werkdag." />
+  <meta name="twitter:image" content="https://buscemigroup.be/assets/og-image.png" />
+
+  <!-- Skip-link styling -->
+  <style>
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;z-index:1000;background:#fff;outline:2px solid currentColor}
+  </style>
 </head>
 <body>
-  <a class="visually-hidden skip-link" href="#main">Ga naar hoofdinhoud</a>
+  <a class="skip-link" href="#main">Ga naar hoofdinhoud</a>
 
-  <header class="site-header" role="banner">
+  <!-- Header/nav -->
+  <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="Buscemi Group home">
+      <a class="brand" href="/">
         <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
       </a>
-      <nav class="nav-links" aria-label="Hoofdnavigatie">
+
+      <button class="burger"
+              data-nav-toggle
+              aria-label="Hoofdmenu"
+              aria-expanded="false"
+              aria-controls="site-menu">☰</button>
+
+      <nav id="site-menu"
+           class="nav-links"
+           data-nav-menu
+           aria-label="Hoofdnavigatie"
+           aria-hidden="true">
         <ul class="menu">
-          <li><a href="/over.html">Over</a></li>
-          <li><a href="/diensten/">Diensten</a></li>
-          <li aria-current="page"><a href="/contact.html">Contact</a></li>
+          <li><a href="/over.html" data-nav-link>Over</a></li>
+          <li>
+            <details class="dropdown">
+              <summary>Diensten</summary>
+              <ul class="submenu">
+                <li><a href="/diensten/marketing.html" data-nav-link>Marketing</a></li>
+                <li><a href="/diensten/consultancy.html" data-nav-link>Consultancy</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="/insights/index.html" data-nav-link>Insights</a></li>
+          <li><a href="/contact.html" class="is-active" data-nav-link>Contact</a></li>
         </ul>
       </nav>
-      <a class="btn primary-cta" href="/#contact">Plan kennismaking</a>
+
+      <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
     </div>
   </header>
 
   <main id="main">
     <!-- Hero -->
-    <section class="hero container">
-      <div class="grid-2">
-        <div>
-          <h1>Contact</h1>
-          <p>Stel je vraag of plan een kennismaking. We antwoorden <strong>binnen één werkdag</strong>.</p>
-          <div class="card pad" style="margin-top:16px">
-            <p class="muted" style="margin:0">
-              E-mail: <a href="mailto:info@buscemigroup.be">info@buscemigroup.be</a><br />
-              Tel: <a href="tel:+324XXXXXXXX">+32 4X XX XX XXX</a><br />
-              Adres: ⚠️ Straat, nr — Postcode Gemeente
-            </p>
-          </div>
-        </div>
+    <section class="subpage-hero">
+      <div class="container">
+        <h1>Contact</h1>
+        <p class="sub mx-auto max-w-760">Stel je vraag of plan een kennismaking. We antwoorden <strong>binnen één werkdag</strong>.</p>
       </div>
     </section>
 
-    <!-- Formulier -->
+    <!-- Contactgegevens + Formulier -->
     <section class="container mt-20">
       <div class="grid-2">
+        <!-- Formulier -->
         <div class="card pad">
           <h2 class="mt-0">Stuur ons een bericht</h2>
           <form name="contact" method="POST" data-netlify="true" netlify-honeypot="vakantie" action="/bedankt.html" novalidate>
             <input type="hidden" name="form-name" value="contact" />
-            <!-- Honeypot -->
             <p class="visually-hidden">
               <label>Laat dit veld leeg: <input name="vakantie" /></label>
             </p>
 
-            <label class="field">
+            <label>
               <span>Naam*</span>
               <input type="text" name="naam" autocomplete="name" required />
             </label>
 
-            <label class="field">
+            <label>
               <span>E-mail*</span>
               <input type="email" name="email" autocomplete="email" required />
             </label>
 
-            <div class="grid" style="grid-template-columns:1fr 1fr; gap:12px;">
-              <label class="field">
+            <div class="row">
+              <label>
                 <span>Bedrijf</span>
                 <input type="text" name="bedrijf" autocomplete="organization" />
               </label>
-              <label class="field">
+              <label>
                 <span>Telefoon</span>
                 <input type="tel" name="telefoon" autocomplete="tel" />
               </label>
             </div>
 
-            <label class="field">
+            <label>
               <span>Waarmee kunnen we helpen?*</span>
               <textarea name="vraag" rows="6" required></textarea>
             </label>
 
-            <label class="field" style="align-items:flex-start;">
-              <input type="checkbox" name="privacy" required style="margin-top:4px" />
-              <span class="muted" style="margin-left:8px">
-                Ik ga akkoord met de <a href="/legal.html" target="_blank" rel="noopener">privacyvoorwaarden</a>.
-              </span>
+            <label style="display:flex;align-items:flex-start;gap:8px;">
+              <input type="checkbox" name="privacy" required />
+              <span class="muted">Ik ga akkoord met de <a href="/legal.html" target="_blank" rel="noopener">privacyvoorwaarden</a>.</span>
             </label>
 
             <div class="form__actions" style="margin-top:12px; display:flex; gap:12px; align-items:center;">
@@ -98,20 +142,18 @@
           </form>
         </div>
 
+        <!-- Contactopties -->
         <aside class="card pad">
-          <h2 class="mt-0">Liever meteen plannen?</h2>
-          <!-- Vervang door je echte Calendly-link of verwijder deze kaart -->
-          <p class="muted">Kies een moment dat past. We bellen/meet’n kort om je vraag te kaderen.</p>
+          <h2 class="mt-0">Andere contactopties</h2>
+          <p class="muted">
+            E-mail: <a href="mailto:info@buscemigroup.be">info@buscemigroup.be</a><br />
+            Tel: <a href="tel:+324XXXXXXXX">+32 4X XX XX XXX</a><br />
+            Adres: ⚠️ Straat, nr — Postcode Gemeente
+          </p>
+
+          <h3 class="mt-24">Liever meteen plannen?</h3>
+          <p class="muted">Kies een moment dat past. We bellen of meeten kort om je vraag te kaderen.</p>
           <a class="btn" href="https://calendly.com/jouw-calendly/intro" target="_blank" rel="noopener">Plan kennismaking</a>
-
-          <hr style="border:none; border-top:1px solid #273244; margin:16px 0;" />
-
-          <h3 class="mt-0">Andere contactopties</h3>
-          <ul class="muted" style="margin:0; padding-left:18px;">
-            <li><a href="mailto:info@buscemigroup.be">Mail ons</a> — we antwoorden snel.</li>
-            <li><a href="tel:+324XXXXXXXX">Bel ons</a> — tijdens kantooruren.</li>
-            <li><a href="/legal.html">Privacy & voorwaarden</a></li>
-          </ul>
         </aside>
       </div>
     </section>
@@ -129,17 +171,25 @@
     <div class="container flex justify-between items-center gap-12 flex-wrap">
       <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
       <div class="muted">
-        <a href="/legal.html">Privacy & Voorwaarden</a>
+        <a href="/legal.html">Privacy</a> • <a href="/legal.html">Cookies</a> • <a href="/legal.html">Algemene voorwaarden</a>
       </div>
     </div>
   </footer>
 
-  <!-- Geen plausible/cookie scripts op deze pagina -->
+  <!-- Scripts -->
+  <script src="/cookie.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/nav.js" defer></script>
+
+  <!-- Jaar in footer -->
   <script>
-    (function(){
+    document.addEventListener('DOMContentLoaded', function () {
       var y=document.getElementById('year');
       if (y) y.textContent=new Date().getFullYear();
-    }());
+    });
   </script>
+
+  <!-- No-JS fallback -->
+  <noscript><style>[data-nav-menu]{display:block!important}</style></noscript>
 </body>
 </html>
