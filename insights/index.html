@@ -4,59 +4,50 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Insights — Buscemi Group</title>
-  <meta name="description" content="Praktische tips en artikels — kort en toepasbaar." />
-  <link rel="canonical" href="https://www.buscemigroup.be/insights/" />
+  <title>Insights | Buscemi Group</title>
+  <meta name="description" content="Praktische tips en artikels van Buscemi Group — kort, krachtig en direct toepasbaar voor uw KMO." />
+  <link rel="canonical" href="https://buscemigroup.be/insights/" />
   <meta name="theme-color" content="#0d1425" />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
 
-
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="/favicon.ico" />
+  <!-- Icons & PWA -->
+  <link rel="icon" href="/assets/favicon.png" type="image/png" />
   <link rel="manifest" href="/site.webmanifest" />
 
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.buscemigroup.be/insights/" />
+  <meta property="og:url" content="https://buscemigroup.be/insights/" />
   <meta property="og:site_name" content="Buscemi Group" />
-  <meta property="og:title" content="Insights — Buscemi Group" />
+  <meta property="og:title" content="Insights | Buscemi Group" />
   <meta property="og:description" content="Praktische tips en artikels — kort en toepasbaar." />
-  <meta property="og:image" content="https://www.buscemigroup.be/assets/og-image.png" />
-  <meta property="og:locale" content="nl_BE" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Insights — Buscemi Group" />
-  <meta name="twitter:description" content="Praktische tips en artikels — kort en toepasbaar." />
-  <meta name="twitter:image" content="https://www.buscemigroup.be/assets/og-image.png" />
-
+  <meta property="og:image" content="https://buscemigroup.be/assets/og-image.png" />
+  
   <style>
     .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;z-index:1000;background:#fff;outline:2px solid currentColor}
+    .subpage-hero { background: var(--bg-soft); text-align: center; padding-top: clamp(3rem, 8vw, 5rem); padding-bottom: clamp(3rem, 8vw, 5rem); }
+    .insights-section { padding-top: clamp(3rem, 8vw, 6rem); }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Ga naar hoofdinhoud</a>
 
   <header class="site-header">
-    <div class="container nav">
+    <div class="container nav-container">
       <a class="brand" href="/">
         <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40" decoding="async" />
       </a>
-
-      <button class="burger"
-              data-nav-toggle
-              aria-label="Hoofdmenu"
-              aria-expanded="false"
-              aria-controls="site-menu">☰</button>
-
-      <nav id="site-menu"
-           class="nav-links"
-           data-nav-menu
-           aria-label="Hoofdnavigatie"
-           aria-hidden="true">
+      <button class="burger" data-nav-toggle aria-label="Hoofdmenu" aria-expanded="false" aria-controls="site-menu">
+        <span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span>
+      </button>
+      <nav id="site-menu" class="nav-links" data-nav-menu aria-label="Hoofdnavigatie" aria-hidden="true">
         <ul class="menu">
           <li><a href="/over.html" data-nav-link>Over</a></li>
           <li>
@@ -68,11 +59,10 @@
               </ul>
             </details>
           </li>
-          <li><a href="/insights/" data-nav-link>Insights</a></li>
+          <li><a href="/insights/index.html" data-nav-link class="is-active">Insights</a></li>
           <li><a href="/contact.html" data-nav-link>Contact</a></li>
         </ul>
       </nav>
-
       <a class="btn primary-cta" href="/contact.html">Plan kennismaking</a>
     </div>
   </header>
@@ -80,54 +70,85 @@
   <main id="main">
     <section class="subpage-hero">
       <div class="container">
-        <h1>Insights</h1>
-        <p class="sub">Praktische tips en artikels — kort en toepasbaar.</p>
+        <p class="kicker">Insights</p>
+        <h1>Praktische tips & artikels</h1>
+        <p class="sub mx-auto">Kort, krachtig en direct toepasbaar voor uw KMO.</p>
       </div>
     </section>
 
-    <div class="container" style="padding-top: 32px; padding-bottom: 32px;">
-      <div class="post-grid">
-        <a class="card post" href="/insights/social-strategie-30-min.html">
-          <span class="badge">Marketing</span>
-          <h3>Social strategie in 30 minuten per week</h3>
-          <p>Snel impact zonder fulltime social team: zo hou je structuur in 30 minuten per week.</p>
-        </a>
-        <a class="card post" href="/insights/kosten-besparen-met-data.html">
-          <span class="badge">Consultancy</span>
-          <h3>Kosten besparen met data</h3>
-          <p>Zo leg je verborgen kosten bloot en verhoog je marge met eenvoudige analyses.</p>
-        </a>
-        <a class="card post" href="#">
-          <span class="badge">Groei</span>
-          <h3>Consistent groeien</h3>
-          <p>Waarom kleine, consequente stappen vaak meer opleveren dan grote sprongen.</p>
-        </a>
+    <section class="insights-section fade-in-section">
+        <div class="container">
+            <div class="insights-grid">
+                <a class="card insight-card" href="/insights/social-strategie-30-min.html">
+                    <span class="badge">Marketing</span>
+                    <h3>Social strategie in 30 minuten per week</h3>
+                    <p>Snel impact zonder fulltime social team: zo hou je structuur in 30 minuten per week.</p>
+                    <span class="card-link">Lees artikel</span>
+                </a>
+                <a class="card insight-card" href="/insights/kosten-besparen-met-data.html">
+                    <span class="badge">Consultancy</span>
+                    <h3>Kosten besparen met data-analyse</h3>
+                    <p>Zo leg je verborgen kosten bloot en verhoog je marge met eenvoudige, gerichte analyses.</p>
+                    <span class="card-link">Lees artikel</span>
+                </a>
+                <a class="card insight-card" href="#">
+                    <span class="badge">Groei</span>
+                    <h3>Consistent groeien: de kracht van kleine stappen</h3>
+                    <p>Waarom kleine, consequente stappen op lange termijn vaak meer opleveren dan grote sprongen ineens.</p>
+                    <span class="card-link">Lees artikel</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section fade-in-section">
+      <div class="container">
+        <div class="cta-card">
+          <h2>Hulp nodig met uw strategie?</h2>
+          <p>Plan een vrijblijvend gesprek en laten we samen de mogelijkheden voor uw bedrijf bekijken.</p>
+          <a class="btn" href="/contact.html">Plan kennismaking</a>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container flex justify-between items-center gap-12 flex-wrap">
-      <div>© <span id="year"></span> Buscemi Group — Alle rechten voorbehouden</div>
-      <div class="muted">
-        <a href="/legal.html">Privacy</a> • <a href="/legal.html">Cookies</a> • <a href="/legal.html">Algemene voorwaarden</a>
+      <div class="container footer-container">
+        <div class="footer-brand">
+          <img src="/assets/logo.png" alt="Buscemi Group" width="160" height="40">
+          <p>Marketing & Consultancy voor KMO's.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/legal.html">Privacy</a>
+          <a href="/legal.html#cookies">Cookies</a>
+          <a href="/legal.html#voorwaarden">Voorwaarden</a>
+        </div>
+        <div class="footer-info">
+          <p>&copy; <span id="year"></span> Buscemi Group</p>
+          <p>BE 1027.136.562</p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
   <script src="/cookie.js" defer></script>
   <script src="/js/analytics.js" defer></script>
   <script src="/nav.js" defer></script>
-
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var y = document.getElementById('year');
-      if (y) y.textContent = new Date().getFullYear();
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sections = document.querySelectorAll('.fade-in-section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      sections.forEach(section => { observer.observe(section); });
     });
   </script>
-
-  <noscript><style>[data-nav-menu]{display:block!important}</style></noscript>
-  
-  <div class="sticky-cta"><a class="btn" href="/contact.html">Plan gesprek</a></div>
+  <noscript><style>.fade-in-section { opacity: 1; transform: none; } [data-nav-menu]{display:block!important}</style></noscript>
 </body>
 </html>
