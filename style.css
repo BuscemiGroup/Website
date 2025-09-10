@@ -186,7 +186,7 @@ p {
 }
 
 .brand img {
-  height: clamp(32px, 5vw, 64px);
+  height: clamp(40px, 6vw, 80px);
   width: auto;
 }
 
