@@ -1,7 +1,6 @@
 /* ==========================================================================
-   Buscemi Group – style.css (v5.0 - Professional Refinement)
-   Focus op 'less is more': clean, professioneel en uitmuntend.
-   Meer witruimte, verfijnde typografie en een rustige, zelfverzekerde uitstraling.
+   Buscemi Group – style.css (v6.0 - Final Polish & Fixes)
+   Finale revisie voor een uitmuntend en foutloos resultaat.
    ========================================================================== */
 
 /* ------------------------------
@@ -13,7 +12,7 @@
   --accent:       #c4a04a;
   --accent-soft:  rgba(196, 160, 74, 0.1);
   --bg:           #ffffff;
-  --surface:      #f9f9f9; /* Iets lichter voor subtieler contrast */
+  --surface:      #f9f9f9;
   --text:         #121822;
   --muted:        #64748b;
   --border:       #eef0f3;
@@ -55,10 +54,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.8rem, 5vw, 4rem); } /* Iets groter voor meer impact */
+h1 { font-size: clamp(2.8rem, 5vw, 4rem); }
 h2 { font-size: clamp(2.2rem, 4vw, 3rem); }
 h3 { font-size: 1.5rem; font-family: var(--font-sans); font-weight: 600; }
-p { margin: 0 0 1.5rem; max-width: 70ch; } /* Iets minder breed voor betere leesbaarheid */
+p { margin: 0 0 1.5rem; max-width: 70ch; }
 p:last-child { margin-bottom: 0; }
 a { color: var(--brand); text-decoration: none; transition: color var(--transition-fast); }
 a:hover { color: var(--accent); }
@@ -67,14 +66,14 @@ a:hover { color: var(--accent); }
    2) Layout & Structuur
 ------------------------------ */
 .container { width: min(100% - 2.5rem, var(--container)); margin-inline: auto; }
-.section { padding-block: clamp(5rem, 10vw, 7rem); } /* Meer verticale ruimte */
+.section { padding-block: clamp(5rem, 10vw, 7rem); }
 .surface { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .section-header { text-align: center; max-width: 760px; margin: 0 auto 4rem; }
 .kicker {
   font-family: var(--font-sans); color: var(--accent); font-weight: 600;
   letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; margin-bottom: 1rem;
 }
-.sub, .lead { font-size: 1.2rem; color: var(--muted); margin-left: auto; margin-right: auto; } /* Iets groter */
+.sub, .lead { font-size: 1.2rem; color: var(--muted); margin-left: auto; margin-right: auto; }
 .accent { color: var(--accent); }
 
 /* ------------------------------
@@ -82,12 +81,16 @@ a:hover { color: var(--accent); }
 ------------------------------ */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(255, 255, 255, .8); /* Iets meer blur */
+  background: rgba(255, 255, 255, .8);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
-.nav-container { display: flex; align-items: center; height: 88px; } /* Iets meer hoogte */
-.brand img { height: 38px; width: auto; }
+.nav-container { display: flex; align-items: center; height: 88px; }
+.brand img {
+  height: 40px; /* FIX: Vergroot logo in header */
+  width: auto;
+  display: block;
+}
 .nav-links { margin-left: auto; }
 .nav-links .menu {
   list-style: none; margin: 0; padding: 0;
@@ -108,8 +111,6 @@ a:hover { color: var(--accent); }
 }
 .nav-links a:hover, .nav-links summary:hover, .nav-links a.is-active { color: var(--text); }
 .nav-links a:hover::after, .nav-links summary:hover::after, .nav-links a.is-active::after { transform: scaleX(1); }
-
-/* Dropdown */
 details.dropdown { position: relative; }
 details.dropdown summary { list-style: none; cursor: pointer; }
 details.dropdown summary::-webkit-details-marker { display: none; }
@@ -128,10 +129,7 @@ details[open] > .submenu {
 }
 .submenu a { display: block; padding: 0.75rem 1rem; border-radius: 6px; }
 .submenu a:hover { background: var(--surface); }
-
 .primary-cta { margin-left: 2rem; }
-
-/* Mobile Burger */
 .burger { display: none; }
 
 /* ------------------------------
@@ -140,7 +138,7 @@ details[open] > .submenu {
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: 600; font-size: 0.9rem;
-  padding: 0.9rem 2.2rem; /* Iets meer padding */
+  padding: 0.9rem 2.2rem;
   border-radius: var(--radius);
   border: 1px solid transparent; cursor: pointer;
   letter-spacing: 0.03em; text-transform: uppercase;
@@ -181,7 +179,6 @@ details[open] > .submenu {
 }
 a.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 .card h3 { margin-bottom: 0.75rem; }
-
 .service-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 56px; height: 56px;
@@ -196,13 +193,29 @@ a.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 }
 
 /* ------------------------------
-   6) Hero Sectie
+   6) Hero Secties
 ------------------------------ */
 .hero { text-align: center; overflow: hidden; }
 .hero-container { padding-block: 6rem 7rem; }
 .hero h1 { max-width: 800px; margin-inline: auto; }
 .hero .sub { max-width: 700px; margin-top: 1.5rem; }
 .hero-actions { margin-top: 2.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;}
+
+.subpage-hero {
+    background: var(--surface);
+    text-align: center;
+    padding: 5rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+/* FIX: Cleaner h1 op subpagina's */
+.subpage-hero h1 {
+    max-width: 900px; margin-left: auto; margin-right: auto;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--text); /* Verwijder accentkleur-logica */
+}
+.subpage-hero .sub { max-width: 700px; }
+
 
 /* ------------------------------
    7) Andere Componenten
@@ -230,6 +243,30 @@ a.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 .cta-card .btn { margin-top: 2.5rem; background: #fff; color: var(--brand); }
 .cta-card .btn:hover { background: var(--accent); color: var(--text); }
 
+/* FIX: Contact formulier styling */
+.contact-grid {
+    display: grid; gap: 4rem;
+    align-items: flex-start;
+}
+@media (min-width: 960px) { .contact-grid { grid-template-columns: 1.2fr 1fr; } }
+.contact-info-card { background: var(--surface); padding: 2.5rem; border-radius: var(--radius); }
+.contact-form { display: grid; gap: 1.5rem; }
+.form-group { margin: 0; }
+.form-row { display: grid; gap: 1.5rem; grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+.form-group label {
+    display: block; font-weight: 600; margin-bottom: .5rem; font-size: 0.9rem;
+}
+.form-group input, .form-group textarea {
+    width: 100%; padding: 14px 16px; border: 1px solid var(--border);
+    border-radius: var(--radius); font: inherit; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    background-color: var(--bg);
+}
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(15, 79, 58, 0.15);
+}
 
 /* ------------------------------
    8) Footer
@@ -241,6 +278,10 @@ a.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 }
 .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; }
 .footer-brand p { margin-top: 1rem; max-width: 280px; }
+.footer-brand img {
+  width: 160px;
+  height: auto; /* FIX: Voorkom uitrekking in footer */
+}
 .footer-links { display: flex; gap: 2rem; }
 .footer-links a:hover { color: var(--text); text-decoration: underline; }
 .footer-info p { margin: 0; }
