@@ -4,11 +4,7 @@
    - Laadt Plausible alleen als analytics zijn toegestaan
    - Respecteert "Do Not Track" (config)
    - Exporteert window.cookieConsent.open() en .reset()
-
-   Te doen:
-   1) Verwijder Plausible-script uit <head>.
-   2) Vul PLAUSIBLE_DOMAIN hieronder in.
-   3) (Optioneel) zet COOKIELESS_PLAUSIBLE=true als je cookieloos Plausible gebruikt (geen banner nodig voor analytics).
+   - FIX: Reset via #reset-consent in URL
 */
 
 (function () {
@@ -16,9 +12,9 @@
 
   // ====== CONFIG ======
   var STORAGE_KEY = "bg_consent_v1";
-  var PLAUSIBLE_DOMAIN = "buscemigroup.be";  // <-- PAS DIT AAN
-  var COOKIELESS_PLAUSIBLE = false;          // true = laad Plausible altijd (cookieloos), geen toestemming nodig
-  var RESPECT_DNT = true;                    // “Do Not Track” respecteren
+  var PLAUSIBLE_DOMAIN = "buscemigroup.be";
+  var COOKIELESS_PLAUSIBLE = false;
+  var RESPECT_DNT = true;
   // =====================
 
   var doc = document;
@@ -50,6 +46,11 @@
       v: 1
     }));
   }
+  function resetConsent() {
+    localStorage.removeItem(STORAGE_KEY);
+    if (w.location.hash === '#reset-consent') w.location.hash = '';
+    w.location.reload();
+  }
   function hasDNT() {
     var dnt = w.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack;
     return ("" + dnt === "1" || "" + dnt === "yes");
@@ -57,7 +58,6 @@
 
   function loadPlausible(consent) {
     if (COOKIELESS_PLAUSIBLE) {
-      // Cookieloos: geen toestemming vereist
       return loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
     }
     if (consent && consent.analytics === true) {
@@ -71,15 +71,13 @@
     modal: null,
     build: function () {
       if (this.root) return;
-
-      // Banner + modal markup
       var wrap = doc.createElement("div");
       wrap.id = "bg-consent";
       wrap.innerHTML = [
         '<div class="bgc-banner" role="dialog" aria-live="polite" aria-label="Cookie melding">',
           '<div class="bgc-text">',
             '<strong>Cookies</strong>',
-            '<p>We gebruiken noodzakelijke cookies en optionele analytics (anoniem waar mogelijk) om de site te verbeteren.</p>',
+            '<p>We gebruiken noodzakelijke cookies en optionele analytics om de site te verbeteren.</p>',
           '</div>',
           '<div class="bgc-actions">',
             '<button class="btn bgc-btn-ghost" data-consent="reject" type="button">Weiger</button>',
@@ -105,8 +103,6 @@
           '</div>',
         '</div>'
       ].join("");
-
-      // Light theme CSS (gebruikt je site-variabelen)
       var css = doc.createElement("style");
       css.textContent = [
         ':root{--bgc-bg:var(--bg,#fff);--bgc-text:var(--text,#141414);--bgc-line:var(--line,#ececef);',
@@ -134,30 +130,16 @@
       ].join('');
       doc.head.appendChild(css);
       doc.body.appendChild(wrap);
-
       this.root = wrap;
       this.modal = $('.bgc-modal', wrap);
-
-      // Buttons
       wrap.addEventListener('click', function (e) {
         var t = e.target;
         if (!t.closest('[data-consent]')) return;
         var action = t.closest('[data-consent]').getAttribute('data-consent');
-
-        if (action === 'reject') {
-          ui.hide();
-          applyConsent({ analytics: false });
-        }
-        if (action === 'accept') {
-          ui.hide();
-          applyConsent({ analytics: true });
-        }
-        if (action === 'custom') {
-          ui.openModal();
-        }
-        if (action === 'modal-cancel') {
-          ui.closeModal();
-        }
+        if (action === 'reject') { ui.hide(); applyConsent({ analytics: false }); }
+        if (action === 'accept') { ui.hide(); applyConsent({ analytics: true }); }
+        if (action === 'custom') { ui.openModal(); }
+        if (action === 'modal-cancel') { ui.closeModal(); }
         if (action === 'modal-save') {
           var allowed = !!$('#bgc-analytics').checked;
           ui.closeModal();
@@ -165,19 +147,10 @@
           applyConsent({ analytics: allowed });
         }
       });
-
-      // Klik op overlay sluit modal
-      this.modal.addEventListener('click', function (e) {
-        if (e.target === ui.modal) ui.closeModal();
-      });
+      this.modal.addEventListener('click', function (e) { if (e.target === ui.modal) ui.closeModal(); });
     },
-    show: function () {
-      this.build();
-      this.root.style.display = 'flex';
-    },
-    hide: function () {
-      if (this.root) this.root.style.display = 'none';
-    },
+    show: function () { this.build(); this.root.style.display = 'flex'; },
+    hide: function () { if (this.root) this.root.style.display = 'none'; },
     openModal: function () {
       this.build();
       var saved = getConsent();
@@ -187,9 +160,7 @@
       this.modal.hidden = false;
       this.modal.style.display = 'grid';
     },
-    closeModal: function () {
-      if (this.modal) { this.modal.hidden = true; this.modal.style.display = 'none'; }
-    }
+    closeModal: function () { if (this.modal) { this.modal.hidden = true; this.modal.style.display = 'none'; } }
   };
 
   function applyConsent(c) {
@@ -200,12 +171,11 @@
   // ====== Public API ======
   w.cookieConsent = {
     open: function () { ui.openModal(); },
-    reset: function () { localStorage.removeItem(STORAGE_KEY); ui.show(); }
+    reset: function () { resetConsent(); }
   };
 
   // ====== Init ======
   function init() {
-    // Beheer-link (bv. op legal.html)
     doc.addEventListener('click', function (e) {
       var t = e.target;
       if (t && t.matches && t.matches('#manage-consent')) {
@@ -213,24 +183,20 @@
       }
     });
 
+    // FIX: Toestaan om consent te resetten via hash
+    if (w.location.hash === '#reset-consent') {
+      resetConsent();
+      return; // Stop verdere executie om reload af te wachten
+    }
+
     var saved = getConsent();
-
     if (COOKIELESS_PLAUSIBLE) {
-      // Cookieloos: laad meteen, geen banner nodig
-      loadPlausible({ analytics: true });
-      return;
+      loadPlausible({ analytics: true }); return;
     }
-
-    // Respecteer Do Not Track: standaard analytics uit, zonder banner forceren
     if (!saved && RESPECT_DNT && hasDNT()) {
-      setConsent({ analytics: false });
-      return;
+      setConsent({ analytics: false }); return;
     }
-
-    // Als er al een keuze is, respecteer die en laad eventueel Plausible
     if (saved) { loadPlausible(saved); return; }
-
-    // Geen keuze → toon banner
     ui.show();
   }
 
