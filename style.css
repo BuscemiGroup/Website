@@ -326,3 +326,61 @@ hr{
   margin: var(--space-7) 0;
 }
 kbd{ background:#111827; color:#fff; padding:.15rem .35rem; border-radius:6px; font-size:.8rem; }
+
+/* ==== HOTFIX: Header & Navigatie (plakken ONDERAAN style.css) ==== */
+
+/* 1) Zorg dat nav-items inline blijven en netjes uitlijnen */
+header .header-inner{
+  display:flex; align-items:center; gap:24px;
+  min-height:72px; padding-block:12px;
+  flex-wrap:nowrap;
+}
+header .logo img{ height:32px; width:auto; }
+
+header nav{ margin-left:auto; }
+header nav ul{
+  list-style:none; margin:0; padding:0;
+  display:flex; align-items:center;
+  gap: clamp(12px, 2.4vw, 28px);
+}
+header nav li{ position:relative; }
+
+/* 2) Dropdown via <details>/<summary>: verberg standaard marker */
+header nav summary{
+  list-style:none; cursor:pointer; padding:8px 0;
+  color:var(--muted); font-weight:600;
+}
+header nav summary:hover{ color:var(--text); }
+header nav summary::-webkit-details-marker{ display:none; }
+header nav summary::marker{ content:''; } /* Firefox */
+header nav details[open] > summary{ color:var(--text); }
+
+/* 3) Stijl de dropdownlijst (Diensten) */
+header nav details{ position:relative; }
+header nav details > ul{
+  position:absolute; top:calc(100% + 10px); left:0;
+  min-width:220px; padding:8px;
+  background:#fff; border:1px solid var(--border);
+  border-radius:12px; box-shadow:var(--shadow-2);
+  display:flex; flex-direction:column; gap:2px; z-index:40;
+}
+header nav details > ul a{
+  display:block; padding:10px 12px; border-radius:10px; color:var(--muted);
+}
+header nav details > ul a:hover{ background:var(--surface); color:var(--text); }
+
+/* 4) CTA in de header naast het menu houden */
+header .cta-header{ margin-left: clamp(8px, 2vw, 16px); }
+header .cta-header .btn{ padding:.6rem .9rem; }
+
+/* 5) Verberg eventuele checkbox/hamburger inputs die als toggles dienen op desktop */
+@media (min-width: 900px){
+  header input[type="checkbox"]{ display:none !important; }
+}
+
+/* 6) Zorg dat gewone links in de nav netjes kleuren */
+header nav a{ padding:8px 0; color:var(--muted); font-weight:600; }
+header nav a[aria-current="page"], header nav a:hover{ color:var(--text); }
+
+/* 7) Beperk margin-collapsing direct onder de header */
+header + main, header + .hero, header + section{ scroll-margin-top: 90px; }
