@@ -304,3 +304,43 @@ a.card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
   .footer-container { flex-direction: column; text-align: center; }
   .footer-brand p { margin: 1rem auto 0; }
 }
+/* ------------------------------
+   OPLOSSING: Layout voor 'Over Ons' pagina
+------------------------------ */
+.about-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Twee kolommen: tekst links, kenmerken rechts */
+  gap: 4rem; /* Ruimte tussen de kolommen */
+  align-items: start;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 1rem 0 0 0; /* Lichte padding bovenaan voor betere uitlijning */
+  margin: 0;
+  display: grid;
+  gap: 2rem; /* Ruimte tussen de kenmerken */
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem; /* Ruimte tussen icoon en tekst */
+}
+
+.feature-list svg {
+  flex-shrink: 0;
+  margin-top: 5px; /* Nette uitlijning van icoon met de tekst */
+  color: var(--brand); /* Geeft de iconen de merkkleur */
+}
+
+/* Maakt de layout responsive voor mobiele apparaten */
+@media (max-width: 960px) {
+  .about-layout {
+    grid-template-columns: 1fr; /* Terug naar één kolom op kleinere schermen */
+    gap: 3rem;
+  }
+  .feature-list {
+    padding-top: 0;
+  }
+}
