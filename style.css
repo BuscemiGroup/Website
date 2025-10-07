@@ -79,25 +79,37 @@ a:hover { color: var(--accent); }
 /* ------------------------------
    3) Header & Navigatie
 ------------------------------ */
+/* ------------------------------
+   3) Header & Navigatie
+------------------------------ */
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(255, 255, 255, .8);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
-.nav-container { display: flex; align-items: center; height: 88px; }
+.nav-container { 
+  display: grid; /* OPGELOST: Gebruik Grid voor perfecte centrering */
+  grid-template-columns: 1fr auto 1fr; /* Drie kolommen: links, midden, rechts */
+  align-items: center; 
+  height: 88px; 
+}
+.brand {
+  grid-column: 1 / 2; /* Plaats logo in de eerste kolom */
+  justify-self: start; /* Lijn links uit */
+}
 .brand img {
-  height: 55px; /* OPGELOST: Logo vergroot */
+  height: 55px; /* OPGELOST: Logo is nu groter */
   width: auto;
   display: block;
 }
 .nav-links { 
-  flex-grow: 1; /* OPGELOST: Neemt beschikbare ruimte in */
+  grid-column: 2 / 3; /* OPGELOST: Plaats navigatie in de middelste kolom */
 }
 .nav-links .menu {
   list-style: none; margin: 0; padding: 0;
   display: flex; align-items: center;
-  justify-content: center; /* OPGELOST: Centreert de menu-items */
+  justify-content: center; 
   gap: 2.5rem;
 }
 .nav-links li { display: flex; align-items: center; }
@@ -132,9 +144,12 @@ details[open] > .submenu {
 }
 .submenu a { display: block; padding: 0.75rem 1rem; border-radius: 6px; }
 .submenu a:hover { background: var(--surface); }
-.primary-cta { margin-left: 2rem; }
-.burger { display: none; }
 
+.primary-cta { 
+  grid-column: 3 / 4; /* Plaats knop in de derde kolom */
+  justify-self: end; /* Lijn rechts uit */
+}
+.burger { display: none; }
 /* ------------------------------
    4) Knoppen & Links
 ------------------------------ */
