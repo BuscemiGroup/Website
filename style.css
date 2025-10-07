@@ -96,7 +96,7 @@ a:hover { color: var(--accent); }
   justify-self: start; 
 }
 .brand img {
-  height: 65px; /* OPGELOST: Logo verder vergroot */
+  height: 85px; /* OPGELOST: Logo verder vergroot */
   width: auto;
   display: block;
 }
