@@ -1,19 +1,15 @@
-/* /cookie.js — eenvoudige, lichte consent manager (analytics opt-in)
+/* /cookie.js — v2.1 - Google Analytics Consent Mode
    - Toont banner bij eerste bezoek
    - Slaat keuze op in localStorage
-   - Laadt Plausible alleen als analytics zijn toegestaan
-   - Respecteert "Do Not Track" (config)
-   - Exporteert window.cookieConsent.open() en .reset()
-   - FIX: Reset via #reset-consent in URL
+   - Activeert Google Analytics tracking alleen na expliciete toestemming
 */
 
 (function () {
   "use strict";
 
   // ====== CONFIG ======
-  var STORAGE_KEY = "bg_consent_v1";
-  var PLAUSIBLE_DOMAIN = "buscemigroup.be";
-  var COOKIELESS_PLAUSIBLE = false;
+  var STORAGE_KEY = "bg_consent_v2"; // Nieuwe versie om oude keuzes te resetten
+  var GA_ID = 'G-D3JNSNPKPG'; // Uw Google Analytics ID
   var RESPECT_DNT = true;
   // =====================
 
@@ -21,48 +17,37 @@
   var w = window;
 
   function $(sel, root) { return (root || doc).querySelector(sel); }
-  function $all(sel, root) { return Array.from((root || doc).querySelectorAll(sel)); }
 
-  function loadScript(src, attrs) {
-    return new Promise(function (resolve, reject) {
-      if (doc.querySelector('script[src="' + src + '"]')) { resolve(); return; }
-      var s = doc.createElement("script");
-      s.src = src;
-      if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
-      s.onload = resolve;
-      s.onerror = reject;
-      doc.head.appendChild(s);
-    });
+  // Functie om Google Analytics te activeren
+  function fireAnalytics() {
+    if (typeof gtag === 'function') {
+      gtag('config', GA_ID, { 'send_page_view': true });
+      console.log('Google Analytics tracking geactiveerd na toestemming.');
+    }
   }
 
   function getConsent() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
     catch (e) { return null; }
   }
+
   function setConsent(obj) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       analytics: !!obj.analytics,
       date: new Date().toISOString(),
-      v: 1
+      v: 2
     }));
   }
+
   function resetConsent() {
     localStorage.removeItem(STORAGE_KEY);
     if (w.location.hash === '#reset-consent') w.location.hash = '';
     w.location.reload();
   }
+
   function hasDNT() {
     var dnt = w.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack;
     return ("" + dnt === "1" || "" + dnt === "yes");
-  }
-
-  function loadPlausible(consent) {
-    if (COOKIELESS_PLAUSIBLE) {
-      return loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
-    }
-    if (consent && consent.analytics === true) {
-      return loadScript("https://plausible.io/js/script.js", { defer: "", "data-domain": PLAUSIBLE_DOMAIN });
-    }
   }
 
   // ====== UI ======
@@ -76,8 +61,8 @@
       wrap.innerHTML = [
         '<div class="bgc-banner" role="dialog" aria-live="polite" aria-label="Cookie melding">',
           '<div class="bgc-text">',
-            '<strong>Cookies</strong>',
-            '<p>We gebruiken noodzakelijke cookies en optionele analytics om de site te verbeteren.</p>',
+            '<strong>Cookies & Analytics</strong>',
+            '<p>We gebruiken functionele opslag en optionele analytics om de site anoniem te verbeteren.</p>',
           '</div>',
           '<div class="bgc-actions">',
             '<button class="btn bgc-btn-ghost" data-consent="reject" type="button">Weiger</button>',
@@ -87,14 +72,14 @@
         '</div>',
         '<div class="bgc-modal" role="dialog" aria-modal="true" aria-labelledby="bgc-modal-title" hidden>',
           '<div class="bgc-card">',
-            '<h3 id="bgc-modal-title">Cookievoorkeuren</h3>',
+            '<h3 id="bgc-modal-title">Voorkeuren</h3>',
             '<div class="bgc-row">',
-              '<div><strong>Noodzakelijk</strong><br><span class="muted">Altijd actief voor basisfunctionaliteit en veiligheid.</span></div>',
-              '<div><input type="checkbox" checked disabled aria-label="Noodzakelijk ingeschakeld"></div>',
+              '<div><strong>Noodzakelijk</strong><br><span class="muted">Altijd actief voor basisfunctionaliteit.</span></div>',
+              '<div><input type="checkbox" checked disabled></div>',
             '</div>',
             '<div class="bgc-row">',
-              '<div><strong>Analytics</strong><br><span class="muted">Helpt ons verbeteren. We meten anoniem waar mogelijk.</span></div>',
-              '<div><label class="bgc-switch"><input id="bgc-analytics" type="checkbox" aria-label="Analytics toestaan"><span class="bgc-slider"></span></label></div>',
+              '<div><strong>Analytics</strong><br><span class="muted">Helpt ons anoniem de website te verbeteren.</span></div>',
+              '<div><label class="bgc-switch"><input id="bgc-analytics" type="checkbox"><span class="bgc-slider"></span></label></div>',
             '</div>',
             '<div class="bgc-actions-right">',
               '<button class="btn bgc-btn-ghost" data-consent="modal-cancel" type="button">Annuleer</button>',
@@ -165,16 +150,16 @@
 
   function applyConsent(c) {
     setConsent(c);
-    loadPlausible(c);
+    if (c.analytics) {
+      fireAnalytics();
+    }
   }
 
-  // ====== Public API ======
   w.cookieConsent = {
     open: function () { ui.openModal(); },
     reset: function () { resetConsent(); }
   };
 
-  // ====== Init ======
   function init() {
     doc.addEventListener('click', function (e) {
       var t = e.target;
@@ -183,20 +168,22 @@
       }
     });
 
-    // FIX: Toestaan om consent te resetten via hash
     if (w.location.hash === '#reset-consent') {
       resetConsent();
-      return; // Stop verdere executie om reload af te wachten
+      return;
     }
 
     var saved = getConsent();
-    if (COOKIELESS_PLAUSIBLE) {
-      loadPlausible({ analytics: true }); return;
+    if (saved) {
+      applyConsent(saved);
+      return;
     }
-    if (!saved && RESPECT_DNT && hasDNT()) {
-      setConsent({ analytics: false }); return;
+
+    if (RESPECT_DNT && hasDNT()) {
+      applyConsent({ analytics: false });
+      return;
     }
-    if (saved) { loadPlausible(saved); return; }
+    
     ui.show();
   }
 
