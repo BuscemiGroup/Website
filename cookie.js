@@ -1,192 +1,237 @@
-/* /cookie.js — v2.1 - Google Analytics Consent Mode
-   - Toont banner bij eerste bezoek
-   - Slaat keuze op in localStorage
-   - Activeert Google Analytics tracking alleen na expliciete toestemming
-*/
+/**
+ * /cookie.js
+ * Simpele GDPR-consent (functioneel + analytics).
+ * - Toont banner tot er keuze is gemaakt.
+ * - Bewaart keuze in localStorage onder "cookie_consent".
+ * - Dispatcht 'cookie-consent-changed' zodat /js/analytics.js reageert.
+ */
 
 (function () {
-  "use strict";
+  const STORAGE_KEY = 'cookie_consent';
+  const EVENT_NAME = 'cookie-consent-changed';
 
-  // ====== CONFIG ======
-  var STORAGE_KEY = "bg_consent_v2"; // Nieuwe versie om oude keuzes te resetten
-  var GA_ID = 'G-D3JNSNPKPG'; // Uw Google Analytics ID
-  var RESPECT_DNT = true;
-  // =====================
+  // UI maken
+  function createBanner() {
+    const bar = document.createElement('div');
+    bar.id = 'cookie-banner';
+    bar.setAttribute('role', 'dialog');
+    bar.setAttribute('aria-live', 'polite');
+    bar.setAttribute('aria-label', 'Cookie melding');
+    bar.style.position = 'fixed';
+    bar.style.insetInline = '0';
+    bar.style.bottom = '0';
+    bar.style.zIndex = '99999';
+    bar.style.padding = '16px';
+    bar.style.background = 'rgba(0,0,0,0.9)';
+    bar.style.color = '#fff';
+    bar.style.display = 'flex';
+    bar.style.flexWrap = 'wrap';
+    bar.style.gap = '12px';
+    bar.style.alignItems = 'center';
+    bar.style.justifyContent = 'space-between';
 
-  var doc = document;
-  var w = window;
+    const text = document.createElement('div');
+    text.style.flex = '1 1 320px';
+    text.innerHTML = `
+      We gebruiken <strong>functionele</strong> cookies en – enkel na jouw toestemming – <strong>analytische</strong> cookies (Google Analytics) om onze site te verbeteren.
+      <a href="/legal.html#cookies" style="color:#9fe3c0; text-decoration:underline">Meer info</a>.
+    `;
 
-  function $(sel, root) { return (root || doc).querySelector(sel); }
+    const btns = document.createElement('div');
+    btns.style.display = 'flex';
+    btns.style.gap = '8px';
+    btns.style.flexWrap = 'wrap';
 
-  // Functie om Google Analytics te activeren
-  function fireAnalytics() {
-    if (typeof gtag === 'function') {
-      gtag('config', GA_ID, { 'send_page_view': true });
-      console.log('Google Analytics tracking geactiveerd na toestemming.');
-    }
-  }
+    const reject = document.createElement('button');
+    reject.type = 'button';
+    reject.textContent = 'Weiger alles';
+    Object.assign(reject.style, baseBtnStyle(), { background: '#444' });
 
-  function getConsent() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
-    catch (e) { return null; }
-  }
+    const settings = document.createElement('button');
+    settings.type = 'button';
+    settings.textContent = 'Instellingen';
+    Object.assign(settings.style, baseBtnStyle(), { background: '#2b2b2b' });
 
-  function setConsent(obj) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      analytics: !!obj.analytics,
-      date: new Date().toISOString(),
-      v: 2
-    }));
-  }
+    const accept = document.createElement('button');
+    accept.type = 'button';
+    accept.textContent = 'Accepteer analytics';
+    Object.assign(accept.style, baseBtnStyle(), { background: '#11a367' });
 
-  function resetConsent() {
-    localStorage.removeItem(STORAGE_KEY);
-    if (w.location.hash === '#reset-consent') w.location.hash = '';
-    w.location.reload();
-  }
+    btns.append(reject, settings, accept);
+    bar.append(text, btns);
 
-  function hasDNT() {
-    var dnt = w.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack;
-    return ("" + dnt === "1" || "" + dnt === "yes");
-  }
+    // Instellingen-popover (alleen functioneel/analytics)
+    const modal = createSettingsModal({
+      onSave: (opts) => {
+        setConsent({ analytics: !!opts.analytics });
+        removeBanner();
+      },
+    });
+    document.body.appendChild(modal);
 
-  // ====== UI ======
-  var ui = {
-    root: null,
-    modal: null,
-    build: function () {
-      if (this.root) return;
-      var wrap = doc.createElement("div");
-      wrap.id = "bg-consent";
-      wrap.innerHTML = [
-        '<div class="bgc-banner" role="dialog" aria-live="polite" aria-label="Cookie melding">',
-          '<div class="bgc-text">',
-            '<strong>Cookies & Analytics</strong>',
-            '<p>We gebruiken functionele opslag en optionele analytics om de site anoniem te verbeteren.</p>',
-          '</div>',
-          '<div class="bgc-actions">',
-            '<button class="btn bgc-btn-ghost" data-consent="reject" type="button">Weiger</button>',
-            '<button class="btn alt bgc-btn-alt" data-consent="custom" type="button">Instellingen</button>',
-            '<button class="btn bgc-btn" data-consent="accept" type="button">Accepteer alles</button>',
-          '</div>',
-        '</div>',
-        '<div class="bgc-modal" role="dialog" aria-modal="true" aria-labelledby="bgc-modal-title" hidden>',
-          '<div class="bgc-card">',
-            '<h3 id="bgc-modal-title">Voorkeuren</h3>',
-            '<div class="bgc-row">',
-              '<div><strong>Noodzakelijk</strong><br><span class="muted">Altijd actief voor basisfunctionaliteit.</span></div>',
-              '<div><input type="checkbox" checked disabled></div>',
-            '</div>',
-            '<div class="bgc-row">',
-              '<div><strong>Analytics</strong><br><span class="muted">Helpt ons anoniem de website te verbeteren.</span></div>',
-              '<div><label class="bgc-switch"><input id="bgc-analytics" type="checkbox"><span class="bgc-slider"></span></label></div>',
-            '</div>',
-            '<div class="bgc-actions-right">',
-              '<button class="btn bgc-btn-ghost" data-consent="modal-cancel" type="button">Annuleer</button>',
-              '<button class="btn bgc-btn" data-consent="modal-save" type="button">Opslaan</button>',
-            '</div>',
-          '</div>',
-        '</div>'
-      ].join("");
-      var css = doc.createElement("style");
-      css.textContent = [
-        ':root{--bgc-bg:var(--bg,#fff);--bgc-text:var(--text,#141414);--bgc-line:var(--line,#ececef);',
-        '--bgc-green:var(--green,#0e4d38);--bgc-green2:var(--green-2,#0b3e2e);--bgc-shadow:var(--shadow,0 6px 24px rgba(0,0,0,.08));',
-        '--bgc-radius:14px}',
-        '#bg-consent{position:fixed;left:0;right:0;bottom:0;z-index:2000;display:flex;justify-content:center;padding:12px}',
-        '.bgc-banner{max-width:1040px;width:100%;display:flex;gap:12px;align-items:center;background:var(--bgc-bg);color:var(--bgc-text);border:1px solid var(--bgc-line);border-radius:var(--bgc-radius);padding:12px 14px;box-shadow:var(--bgc-shadow)}',
-        '.bgc-text p{margin:.25rem 0 0;opacity:.9}',
-        '.bgc-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}',
-        '.bgc-btn{background:var(--bgc-green);color:#fff} .bgc-btn:hover{background:var(--bgc-green2)}',
-        '.bgc-btn-ghost{background:transparent;border:1px solid var(--bgc-line);color:var(--bgc-text)}',
-        '.bgc-btn-ghost:hover{background:#f5f6f7}',
-        '.bgc-btn-alt{border-color:var(--bgc-green);color:var(--bgc-green)} .bgc-btn-alt:hover{background:var(--bgc-green);color:#fff}',
-        '.bgc-modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;place-items:center}',
-        '.bgc-card{background:var(--bgc-bg);color:var(--bgc-text);border:1px solid var(--bgc-line);border-radius:var(--bgc-radius);max-width:560px;width:92%;padding:16px;box-shadow:var(--bgc-shadow)}',
-        '.bgc-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bgc-line);padding:12px 0}',
-        '.bgc-actions-right{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}',
-        '.muted{color:var(--muted,#5e6168)}',
-        '.bgc-switch{position:relative;display:inline-block;width:44px;height:24px}',
-        '.bgc-switch input{opacity:0;width:0;height:0}',
-        '.bgc-slider{position:absolute;cursor:pointer;inset:0;background:#dfe3e8;transition:.2s;border-radius:20px}',
-        '.bgc-slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;transition:.2s;border-radius:50%}',
-        'input:checked + .bgc-slider{background:var(--bgc-green)} input:checked + .bgc-slider:before{transform:translateX(20px)}',
-        '@media (max-width:700px){#bg-consent{padding:12px} .bgc-banner{flex-direction:column;align-items:flex-start}}'
-      ].join('');
-      doc.head.appendChild(css);
-      doc.body.appendChild(wrap);
-      this.root = wrap;
-      this.modal = $('.bgc-modal', wrap);
-      wrap.addEventListener('click', function (e) {
-        var t = e.target;
-        if (!t.closest('[data-consent]')) return;
-        var action = t.closest('[data-consent]').getAttribute('data-consent');
-        if (action === 'reject') { ui.hide(); applyConsent({ analytics: false }); }
-        if (action === 'accept') { ui.hide(); applyConsent({ analytics: true }); }
-        if (action === 'custom') { ui.openModal(); }
-        if (action === 'modal-cancel') { ui.closeModal(); }
-        if (action === 'modal-save') {
-          var allowed = !!$('#bgc-analytics').checked;
-          ui.closeModal();
-          ui.hide();
-          applyConsent({ analytics: allowed });
-        }
-      });
-      this.modal.addEventListener('click', function (e) { if (e.target === ui.modal) ui.closeModal(); });
-    },
-    show: function () { this.build(); this.root.style.display = 'flex'; },
-    hide: function () { if (this.root) this.root.style.display = 'none'; },
-    openModal: function () {
-      this.build();
-      var saved = getConsent();
-      var dnt = RESPECT_DNT && hasDNT();
-      var chk = $('#bgc-analytics');
-      if (chk) chk.checked = saved ? !!saved.analytics : !dnt;
-      this.modal.hidden = false;
-      this.modal.style.display = 'grid';
-    },
-    closeModal: function () { if (this.modal) { this.modal.hidden = true; this.modal.style.display = 'none'; } }
-  };
-
-  function applyConsent(c) {
-    setConsent(c);
-    if (c.analytics) {
-      fireAnalytics();
-    }
-  }
-
-  w.cookieConsent = {
-    open: function () { ui.openModal(); },
-    reset: function () { resetConsent(); }
-  };
-
-  function init() {
-    doc.addEventListener('click', function (e) {
-      var t = e.target;
-      if (t && t.matches && t.matches('#manage-consent')) {
-        e.preventDefault(); w.cookieConsent.open();
-      }
+    reject.addEventListener('click', () => {
+      setConsent({ analytics: false });
+      removeBanner();
     });
 
-    if (w.location.hash === '#reset-consent') {
-      resetConsent();
-      return;
-    }
+    accept.addEventListener('click', () => {
+      setConsent({ analytics: true });
+      removeBanner();
+    });
 
-    var saved = getConsent();
-    if (saved) {
-      applyConsent(saved);
-      return;
-    }
+    settings.addEventListener('click', () => openSettings(modal));
 
-    if (RESPECT_DNT && hasDNT()) {
-      applyConsent({ analytics: false });
-      return;
-    }
-    
-    ui.show();
+    document.body.appendChild(bar);
+    // Focus voor toegankelijkheid
+    setTimeout(() => reject.focus(), 50);
   }
 
-  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);
-  else init();
+  function baseBtnStyle() {
+    return {
+      color: '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '10px 14px',
+      cursor: 'pointer',
+      fontSize: '14px'
+    };
+  }
+
+  function createSettingsModal({ onSave }) {
+    const wrap = document.createElement('div');
+    wrap.id = 'cookie-settings';
+    wrap.style.position = 'fixed';
+    wrap.style.inset = '0';
+    wrap.style.background = 'rgba(0,0,0,0.6)';
+    wrap.style.zIndex = '100000';
+    wrap.style.display = 'none';
+    wrap.setAttribute('role', 'dialog');
+    wrap.setAttribute('aria-modal', 'true');
+    wrap.setAttribute('aria-label', 'Cookie instellingen');
+
+    const panel = document.createElement('div');
+    panel.style.background = '#fff';
+    panel.style.color = '#111';
+    panel.style.maxWidth = '520px';
+    panel.style.margin = '8vh auto';
+    panel.style.padding = '20px';
+    panel.style.borderRadius = '12px';
+    panel.style.boxShadow = '0 8px 40px rgba(0,0,0,.25)';
+
+    panel.innerHTML = `
+      <h2 style="margin:0 0 12px 0; font-size:20px;">Cookie-instellingen</h2>
+      <p style="margin:0 0 12px 0;">Kies welke cookies je toelaat. Functionele cookies zijn noodzakelijk en altijd actief.</p>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-top:1px solid #eee;">
+        <div>
+          <strong>Functioneel</strong><br>
+          Nodig voor basiswerking (altijd actief).
+        </div>
+        <input type="checkbox" checked disabled aria-label="Functionele cookies verplicht">
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
+        <div>
+          <strong>Analytisch</strong><br>
+          Google Analytics om de site te verbeteren.
+        </div>
+        <input id="toggle-analytics" type="checkbox" aria-label="Analytische cookies toestaan">
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:14px;">
+        <button type="button" id="cs-cancel" style="padding:10px 12px; border-radius:8px; border:1px solid #ddd; background:#f6f6f6; cursor:pointer;">Annuleren</button>
+        <button type="button" id="cs-save" style="padding:10px 12px; border-radius:8px; border:none; background:#111; color:#fff; cursor:pointer;">Opslaan</button>
+      </div>
+    `;
+
+    const btnCancel = panel.querySelector('#cs-cancel');
+    const btnSave = panel.querySelector('#cs-save');
+    const toggleAnalytics = panel.querySelector('#toggle-analytics');
+
+    btnCancel.addEventListener('click', () => closeSettings(wrap));
+    btnSave.addEventListener('click', () => {
+      onSave({ analytics: toggleAnalytics.checked });
+      closeSettings(wrap);
+    });
+
+    // laad huidige keuze (indien bekend)
+    const current = readConsent();
+    if (current) toggleAnalytics.checked = !!current.analytics;
+
+    wrap.appendChild(panel);
+    return wrap;
+  }
+
+  function openSettings(modal) {
+    // sync huidige keuze naar toggle
+    const current = readConsent();
+    const toggle = modal.querySelector('#toggle-analytics');
+    if (toggle && current) toggle.checked = !!current.analytics;
+
+    modal.style.display = 'block';
+    modal.querySelector('#cs-save').focus();
+  }
+
+  function closeSettings(modal) {
+    modal.style.display = 'none';
+  }
+
+  function removeBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.remove();
+  }
+
+  function readConsent() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      if (raw === 'accepted' || raw === 'all') return { analytics: true };
+      const parsed = JSON.parse(raw);
+      if (typeof parsed === 'object' && parsed) return { analytics: !!parsed.analytics };
+    } catch (_) {}
+    return null;
+  }
+
+  function writeConsent(obj) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    } catch (_) {}
+  }
+
+  function dispatchChange(analytics) {
+    window.dispatchEvent(new CustomEvent(EVENT_NAME, { detail: { analytics: !!analytics } }));
+  }
+
+  function setConsent({ analytics }) {
+    writeConsent({ analytics: !!analytics, functional: true });
+    // Exporteer ook globale state zodat analytics.js het meteen ziet
+    window.cookieConsent = { analytics: !!analytics, functional: true };
+    dispatchChange(analytics);
+  }
+
+  function init() {
+    // link op legal page om consent te beheren
+    const m = document.getElementById('manage-consent');
+    if (m) {
+      m.addEventListener('click', function (e) {
+        e.preventDefault();
+        const modal = document.getElementById('cookie-settings');
+        if (modal) openSettings(modal);
+      });
+    }
+
+    const existing = readConsent();
+    if (existing) {
+      // Stel globale state en dispatch zodat analytics.js direct kan handelen bij reload
+      window.cookieConsent = { analytics: !!existing.analytics, functional: true };
+      dispatchChange(!!existing.analytics);
+      return; // geen banner tonen
+    }
+
+    // Nog geen keuze → toon banner
+    createBanner();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
