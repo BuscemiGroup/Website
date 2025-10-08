@@ -2,10 +2,10 @@
 
 const CACHE = 'buscemi-v1';
 const PRECACHE_ASSETS = [
-  '/',               // homepage
-  '/index.html',     // pas aan als jouw index anders heet of in submap staat
+  '/',               
+  '/index.html',     
   '/nav.js',
-  '/utilities.css'   // pas aan naar jouw hoofd CSS (of verwijder als je file anders heet)
+  '/style.css'   
 ];
 
 // Helper: is same-origin?
